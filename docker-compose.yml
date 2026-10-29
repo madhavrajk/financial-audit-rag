@@ -1,0 +1,19 @@
+services:
+  app:
+    build: .
+    image: financial-audit-rag:latest
+    env_file: .env
+    ports:
+      - "127.0.0.1:8000:8000"   # published on localhost only
+    read_only: true              # immutable container filesystem...
+    tmpfs:
+      - /app/logs:uid=10001,gid=10001,mode=0755   # ...except the request-trace log
+      - /tmp
+    security_opt:
+      - no-new-privileges:true
+    deploy:
+      resources:
+        limits:
+          cpus: "1"
+          memory: 512M           # index + app use about 150 MB
+    restart: unless-stopped

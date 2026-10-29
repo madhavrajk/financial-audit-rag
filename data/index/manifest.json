@@ -1,0 +1,16 @@
+{
+  "index_version": "66d1995fb6b9",
+  "extractor_version": "pages-v1",
+  "embed_model": "qwen3-embedding-8b",
+  "embed_dims": 1024,
+  "pages": 516,
+  "sources": {
+    "AAPL_FY2024_10-K.pdf": "9b7d14b629c8581933eada7016b2554510a9a37644f94949d583c420fe852d6f",
+    "AAPL_FY2025_10-K.pdf": "fc620dcf5046431d327eecd048af3377eb838a174d631260617822958ccef18b",
+    "GOOGL_FY2024_10-K.pdf": "ea32b1be98c2b439897cfd2b336a20013c473cb21bb99efd5934aa917c378a95",
+    "GOOGL_FY2025_10-K.pdf": "543f4b5aa59a32f85f42dbf96aa07ef8879767d466fbe8c95c099f25b2f72f76",
+    "MSFT_FY2024_10-K.pdf": "ff05905c6552e8361bae898e9d21eafea98c886146ad8bdc655b58b21a77b608",
+    "MSFT_FY2025_10-K.pdf": "a6251c929a1979ddde00c8db0e4481e401c5112bc46fdfa915264e8a55120df0"
+  },
+  "built_at": "2026-10-12T21:21:15Z"
+}

@@ -1,0 +1,90 @@
+{
+  "meta": {
+    "model": "gemini-3.5-flash-lite",
+    "judge_model": "gemini-3.1-flash-lite",
+    "versions": {
+      "prompt": "v9",
+      "index": "66d1995fb6b9",
+      "model": "gemini-3.5-flash-lite"
+    },
+    "started": "2026-10-29 13:47:20",
+    "escalation": ""
+  },
+  "runs": [
+    {
+      "run": 1,
+      "summary": {
+        "n": 1,
+        "accuracy": 1.0,
+        "mean_score": 1.0,
+        "by": {
+          "tier": {
+            "1": "1/1"
+          },
+          "evaluation": {
+            "fuzzy_numeric": "1/1"
+          }
+        },
+        "routing_accuracy": 1.0,
+        "answers_with_unsupported_numbers": 0,
+        "errors": 0,
+        "judge_errors_excluded": 0,
+        "latency_p50_s": 118.9,
+        "latency_p95_s": 118.9,
+        "mean_cost_usd": 0.0,
+        "total_cost_usd": 0.0,
+        "judge_cost_usd": 0.0,
+        "mean_prompt_tokens": 15243,
+        "mean_cached_tokens": 0,
+        "mean_completion_tokens": 317,
+        "mean_tool_calls": 3
+      },
+      "rows": [
+        {
+          "id": "h_013",
+          "tier": 1,
+          "evaluation": "fuzzy_numeric",
+          "question": "What was Apple's current ratio in fiscal year 2025?",
+          "gold": "About 0.89 (current assets $148.0B / current liabilities $165.6B).",
+          "answer": "Apple's current ratio in fiscal year 2025 was 0.89.\n\n- Total current assets as of September 27, 2025: $147,957 million.\n- Total current liabilities as of September 27, 2025: $165,631 million.\n- Calculation: $147,957 million / $165,631 million = 0.8933 (rounded to 0.89).\n\nSources: [AAPL FY2025 10-K p.32], [SQL: balance_sheets]",
+          "passed": true,
+          "score": 1.0,
+          "score_detail": "gold=0.89",
+          "judge_error": false,
+          "judge_cost_usd": 0.0,
+          "routing": {
+            "used": [
+              "pdf",
+              "sql"
+            ],
+            "required": [
+              "sql"
+            ],
+            "ok": true,
+            "extra": [
+              "pdf"
+            ]
+          },
+          "tools_used": [
+            "query_database",
+            "calculate",
+            "search_filings"
+          ],
+          "unsupported_numbers": [],
+          "latency_ms": 118865,
+          "cost_usd": 0.0,
+          "usage": {
+            "prompt_tokens": 15243,
+            "completion_tokens": 317,
+            "cached_tokens": 0
+          },
+          "llm_steps": 3,
+          "degraded": true,
+          "models": [
+            "gemini-3.5-flash-lite"
+          ]
+        }
+      ]
+    }
+  ]
+}

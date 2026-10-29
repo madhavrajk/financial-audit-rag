@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>10-K Research Assistant</title>
+<style>
+  :root { --bg:#f7f7f8; --card:#fff; --ink:#1d1d1f; --muted:#6b6b73; --line:#e3e3e8;
+          --accent:#5b2bd6; --ok:#137a3a; --warn:#a15c00; --bad:#b42318; }
+  * { box-sizing: border-box; }
+  body { margin:0; font:15px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+         background:var(--bg); color:var(--ink); }
+  header { padding:14px 24px; border-bottom:1px solid var(--line); background:var(--card);
+           display:flex; justify-content:space-between; align-items:center; gap:12px; }
+  header h1 { font-size:17px; margin:0; }
+  header .status { font-size:12px; color:var(--muted); }
+  main { max-width:960px; margin:0 auto; padding:16px 24px 140px; }
+  .examples { display:flex; flex-wrap:wrap; gap:8px; margin:8px 0 16px; }
+  .examples button { border:1px solid var(--line); background:var(--card); border-radius:16px;
+                     padding:5px 12px; font-size:13px; cursor:pointer; color:var(--ink); }
+  .examples button:hover { border-color:var(--accent); }
+  .setup { background:#fff3e0; border:1px solid #f1d3a6; border-radius:10px; padding:12px 16px; margin:12px 0; }
+  .setup p { margin:6px 0 0; }
+  .setup a { color:var(--accent); }
+  .msg { background:var(--card); border:1px solid var(--line); border-radius:10px;
+         padding:14px 16px; margin:12px 0; }
+  .msg.user { background:#efeafd; border-color:#ddd2fb; }
+  .msg .role { font-size:12px; color:var(--muted); margin-bottom:4px; }
+  .answer { white-space:pre-wrap; }
+  .badges { display:flex; flex-wrap:wrap; gap:6px; margin-top:10px; }
+  .badge { font-size:12px; border-radius:6px; padding:2px 8px; background:#f0f0f3; color:var(--muted); }
+  .badge.ok { background:#e7f6ec; color:var(--ok); } .badge.warn { background:#fff3e0; color:var(--warn); }
+  .badge.bad { background:#fdecea; color:var(--bad); }
+  details { margin-top:10px; font-size:13px; }
+  summary { cursor:pointer; color:var(--accent); }
+  .sources li, .trace li { margin:4px 0; }
+  .trace pre { white-space:pre-wrap; background:#f7f7f9; border:1px solid var(--line); padding:8px;
+               border-radius:6px; max-height:220px; overflow:auto; font-size:12px; margin:4px 0; }
+  .progress { font-size:13px; color:var(--muted); }
+  form { position:fixed; bottom:0; left:0; right:0; background:var(--card); border-top:1px solid var(--line);
+         padding:14px 24px; }
+  form .row { max-width:960px; margin:0 auto; display:flex; gap:8px; }
+  textarea { flex:1; resize:none; font:inherit; padding:10px 12px; border-radius:8px;
+             border:1px solid var(--line); height:52px; }
+  button.primary { background:var(--accent); color:#fff; border:0; border-radius:8px; padding:0 18px;
+                   font-weight:600; cursor:pointer; }
+  button.primary:disabled { opacity:.5; cursor:default; }
+  button.ghost { background:none; border:1px solid var(--line); border-radius:8px; padding:0 12px; cursor:pointer; }
+</style>
+</head>
+<body>
+<header>
+  <h1>10-K Research Assistant <span style="font-weight:400;color:var(--muted)" id="scope"></span></h1>
+  <div class="status" id="status">checking…</div>
+</header>
+<main>
+  <div class="setup" id="setup" hidden></div>
+  <div class="examples" id="examples"></div>
+  <div id="chat"></div>
+</main>
+<form id="form">
+  <div class="row">
+    <textarea id="q" placeholder="Ask about revenue, segments, risks, MD&A… (Enter to send, Shift+Enter for newline)"></textarea>
+    <button class="ghost" type="button" id="reset" title="Start a new conversation">New</button>
+    <button class="primary" id="send" type="submit">Ask</button>
+  </div>
+</form>
+<script>
+"use strict";
+// All model/tool output is inserted with textContent, never innerHTML, so nothing it
+// contains can execute in the page.
+const $ = (id) => document.getElementById(id);
+const el = (tag, cls, text) => { const e = document.createElement(tag);
+  if (cls) e.className = cls; if (text !== undefined) e.textContent = text; return e; };
+let history = [];
+const sessionId = crypto.randomUUID ? crypto.randomUUID() : String(Math.random()).slice(2);
+
+// Each example is shown only when the companies it asks about are loaded.
+const EXAMPLES = [
+  ["How much revenue did Apple make in the United States in fiscal 2025?", ["AAPL"]],
+  ["Which company spent the largest share of its revenue on R&D in fiscal 2025?", ["AAPL", "MSFT", "GOOGL"]],
+  ["How fast did Microsoft's Intelligent Cloud revenue grow in FY2025, and what drove it?", ["MSFT"]],
+  ["How much did Alphabet spend on capital expenditures in 2025, and on what?", ["GOOGL"]],
+];
+function showExamples(companies) {
+  for (const [ex, needs] of EXAMPLES) {
+    if (!needs.every(t => companies.includes(t))) continue;
+    const b = el("button", "", ex); b.type = "button";
+    b.onclick = () => { $("q").value = ex; $("q").focus(); };
+    $("examples").appendChild(b);
+  }
+}
+
+// A paragraph of server text with its https:// URLs made clickable. Built from text nodes and
+// <a> elements, so nothing in the text is parsed as HTML.
+function withLinks(text) {
+  const p = el("p");
+  for (const part of text.split(/(https:\/\/[^\s,;)]*[^\s,;:).])/)) {
+    if (!part.startsWith("https://")) { p.appendChild(document.createTextNode(part)); continue; }
+    const a = el("a", "", part); a.href = part; a.target = "_blank"; a.rel = "noopener";
+    p.appendChild(a);
+  }
+  return p;
+}
+
+fetch("/readyz").then(r => r.json()).then(j => {
+  const companies = j.companies || [], years = j.fiscal_years || [];
+  if (companies.length) {
+    $("scope").textContent = `· ${companies.length > 6 ? companies.length + " companies" : companies.join(" · ")}`
+      + (years.length ? ` · FY${years[0]}–FY${years[1]}` : "");
+  }
+  showExamples(companies);
+  if (j.ready) {
+    $("status").textContent = `ready · ${j.model.split("/").pop()} · index ${j.index_version}${j.dense_search ? "" : " · keyword-only search"}`;
+    return;
+  }
+  $("status").textContent = "setup needed"; $("status").style.color = "var(--bad)";
+  $("setup").appendChild(el("strong", "", "Setup needed"));
+  for (const problem of j.problems) $("setup").appendChild(withLinks(problem));
+  $("setup").hidden = false;
+}).catch(() => { $("status").textContent = "server unreachable"; });
+
+function addUser(text) {
+  const m = el("div", "msg user"); m.appendChild(el("div", "role", "You"));
+  m.appendChild(el("div", "answer", text)); $("chat").appendChild(m);
+}
+
+function renderResult(box, r) {
+  box.querySelector(".progress")?.remove();
+  const ans = box.querySelector(".answer"); ans.textContent = r.answer;
+  const badges = el("div", "badges");
+  const g = r.grounding;
+  if (g) badges.appendChild(el("span", "badge " + (g.unsupported.length ? "warn" : "ok"),
+      g.unsupported.length ? `⚠ unverified numbers: ${g.unsupported.join(", ")}` : `✓ ${g.checked} numbers grounded`));
+  if (r.cached) badges.appendChild(el("span", "badge ok", "cache hit"));
+  if (r.degraded) badges.appendChild(el("span", "badge warn", "keyword-only search"));
+  badges.appendChild(el("span", "badge", `tools: ${r.tools_used.join(", ") || "none"}`));
+  badges.appendChild(el("span", "badge", `${(r.latency_ms / 1000).toFixed(1)}s`));
+  badges.appendChild(el("span", "badge", `$${r.cost_usd.toFixed(4)}`));
+  badges.appendChild(el("span", "badge", `${r.usage.prompt_tokens + r.usage.completion_tokens} tokens (${r.usage.cached_tokens} cached)`));
+  box.appendChild(badges);
+
+  if (r.standalone_question && r.standalone_question.trim() !== r.question?.trim()) {
+    box.appendChild(el("div", "progress", `Interpreted as: ${r.standalone_question}`));
+  }
+  if (r.sources.length) {
+    const d = el("details"); d.open = true; d.appendChild(el("summary", "", `Evidence (${r.sources.length})`));
+    const ul = el("ul", "sources");
+    for (const s of r.sources) {
+      const li = el("li", "", `${s.label} — `);
+      li.appendChild(el("span", "", s.detail));
+      if (s.kind === "sql") li.lastChild.style.fontFamily = "ui-monospace, monospace";
+      ul.appendChild(li);
+    }
+    d.appendChild(ul); box.appendChild(d);
+  }
+  const t = el("details"); t.appendChild(el("summary", "", `Agent trace (${r.trace.length} steps)`));
+  const ol = el("ol", "trace");
+  for (const s of r.trace) {
+    const li = el("li", "", `${s.kind}${s.name ? ": " + s.name : ""}${s.error ? " (error)" : ""} · ${s.latency_ms}ms`);
+    if (s.args) li.appendChild(el("pre", "", typeof s.args === "string" ? s.args : JSON.stringify(s.args, null, 1)));
+    if (s.output) li.appendChild(el("pre", "", s.output));
+    ol.appendChild(li);
+  }
+  t.appendChild(ol); box.appendChild(t);
+}
+
+async function ask(question) {
+  addUser(question);
+  const box = el("div", "msg"); box.appendChild(el("div", "role", "Assistant"));
+  box.appendChild(el("div", "answer")); const prog = el("div", "progress", "Thinking…");
+  box.appendChild(prog); $("chat").appendChild(box); box.scrollIntoView({behavior: "smooth"});
+  $("send").disabled = true;
+  try {
+    const resp = await fetch("/api/chat", {
+      method: "POST",
+      headers: {"Content-Type": "application/json", "Accept": "text/event-stream"},
+      body: JSON.stringify({question, history, session_id: sessionId}),
+    });
+    if (!resp.ok) { const j = await resp.json().catch(() => ({})); throw new Error(j.error || resp.statusText); }
+    const reader = resp.body.getReader(); const dec = new TextDecoder(); let buf = ""; let answer = null; let meta = null;
+    while (true) {
+      const {done, value} = await reader.read(); if (done) break;
+      buf += dec.decode(value, {stream: true});
+      let i;
+      while ((i = buf.indexOf("\n\n")) >= 0) {
+        const raw = buf.slice(0, i); buf = buf.slice(i + 2);
+        const ev = (raw.match(/^event: (.*)$/m) || [])[1]; const data = JSON.parse((raw.match(/^data: (.*)$/m) || [])[1] || "{}");
+        if (ev === "status") {
+          const s = data.kind === "tool_call" ? `→ ${data.name}` : data.kind === "tool_result" ? `✓ ${data.name}${data.sources.length ? " (" + data.sources.join(", ") + ")" : ""}`
+                  : data.kind === "rewrite" ? `Interpreting as: ${data.question}` : data.kind === "plan" ? "Planning…"
+                  : data.kind === "repair" || data.kind === "escalate" ? `Re-checking numbers (${data.kind})…` : data.kind;
+          prog.textContent = s;
+        } else if (ev === "answer") { answer = data.content; box.querySelector(".answer").textContent = answer; }
+        else if (ev === "done") { meta = data; }
+        else if (ev === "error") { throw new Error(data.error); }
+      }
+    }
+    if (answer !== null && meta) {
+      renderResult(box, {...meta, answer, question});
+      history.push({role: "user", content: question}, {role: "assistant", content: answer});
+      history = history.slice(-10);
+    }
+  } catch (e) {
+    prog.textContent = ""; box.querySelector(".answer").textContent = `Error: ${e.message}`;
+    box.querySelector(".answer").style.color = "var(--bad)";
+  } finally { $("send").disabled = false; }
+}
+
+$("form").onsubmit = (e) => { e.preventDefault(); const q = $("q").value.trim(); if (!q) return; $("q").value = ""; ask(q); };
+$("q").addEventListener("keydown", (e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); $("form").requestSubmit(); } });
+$("reset").onclick = () => { history = []; $("chat").textContent = ""; };
+</script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+.venv/
+__pycache__/
+*.pyc
+.env
+logs/
+.pytest_cache/
+.ruff_cache/
+data/index.tmp/
+data/index.old/
+data/financials.db.tmp
+data/xbrl_raw/
+.DS_Store
+
+# FinanceBench documents and index (downloaded by eval/financebench.py)
+data/financebench/

@@ -1,0 +1,7 @@
+[
+  {"id": "h_009", "query": "What drove Intelligent Cloud revenue growth? Azure and other cloud services revenue growth", "ticker": "MSFT", "fiscal_year": 2025, "gold_pages": [38]},
+  {"id": "h_011", "query": "YouTube ads revenue in 2023", "ticker": "GOOGL", "fiscal_year": 2025, "gold_pages": [61]},
+  {"id": "h_012", "query": "Intelligent Cloud segment revenue as reported in fiscal year 2024", "ticker": "MSFT", "fiscal_year": 2024, "gold_pages": [43, 91]},
+  {"id": "h_014", "query": "Services gross margin percentage", "ticker": "AAPL", "fiscal_year": 2025, "gold_pages": [25]},
+  {"id": "h_006", "query": "How much revenue did Apple generate in the United States in fiscal year 2025?", "ticker": "AAPL", "fiscal_year": 2025, "gold_pages": [48]}
+]

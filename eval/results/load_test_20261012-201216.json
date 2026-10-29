@@ -1,0 +1,64 @@
+{
+  "args": {
+    "url": "http://127.0.0.1:8020",
+    "levels": "1,5,10,25,50",
+    "per_client": 2
+  },
+  "rows": [
+    {
+      "concurrency": 1,
+      "requests": 2,
+      "ok": 2,
+      "errors": {},
+      "throughput_per_min": 22.5,
+      "p50_s": 2.0,
+      "p95_s": 3.3,
+      "mean_cost_usd": 0.00101,
+      "answers_with_unsupported_numbers": 0
+    },
+    {
+      "concurrency": 5,
+      "requests": 10,
+      "ok": 10,
+      "errors": {},
+      "throughput_per_min": 83.0,
+      "p50_s": 2.7,
+      "p95_s": 4.6,
+      "mean_cost_usd": 0.00117,
+      "answers_with_unsupported_numbers": 0
+    },
+    {
+      "concurrency": 10,
+      "requests": 20,
+      "ok": 20,
+      "errors": {},
+      "throughput_per_min": 88.2,
+      "p50_s": 3.7,
+      "p95_s": 6.5,
+      "mean_cost_usd": 0.00113,
+      "answers_with_unsupported_numbers": 0
+    },
+    {
+      "concurrency": 25,
+      "requests": 50,
+      "ok": 50,
+      "errors": {},
+      "throughput_per_min": 123.0,
+      "p50_s": 7.9,
+      "p95_s": 17.6,
+      "mean_cost_usd": 0.00104,
+      "answers_with_unsupported_numbers": 0
+    },
+    {
+      "concurrency": 50,
+      "requests": 100,
+      "ok": 100,
+      "errors": {},
+      "throughput_per_min": 128.7,
+      "p50_s": 15.7,
+      "p95_s": 35.9,
+      "mean_cost_usd": 0.00093,
+      "answers_with_unsupported_numbers": 0
+    }
+  ]
+}

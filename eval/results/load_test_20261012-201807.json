@@ -1,0 +1,22 @@
+{
+  "args": {
+    "url": "http://127.0.0.1:8020",
+    "levels": "100",
+    "per_client": 2
+  },
+  "rows": [
+    {
+      "concurrency": 100,
+      "requests": 200,
+      "ok": 152,
+      "errors": {
+        "503": 48
+      },
+      "throughput_per_min": 107.0,
+      "p50_s": 32.9,
+      "p95_s": 60.4,
+      "mean_cost_usd": 0.00075,
+      "answers_with_unsupported_numbers": 0
+    }
+  ]
+}

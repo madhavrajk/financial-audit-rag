@@ -1,0 +1,1811 @@
+{
+  "meta": {
+    "model": "gpt-oss-120b",
+    "judge_model": "kimi-k3",
+    "versions": {
+      "prompt": "v4",
+      "index": "1669a312787e",
+      "model": "gpt-oss-120b"
+    },
+    "started": "2026-10-12 17:35:31",
+    "escalation": "glm-5p3",
+    "note": "Rows for questions not in eval/questions.json were removed on 2026-10-29; the summaries are recomputed from the rows below."
+  },
+  "runs": [
+    {
+      "run": 1,
+      "summary": {
+        "n": 15,
+        "accuracy": 1.0,
+        "mean_score": 1.0,
+        "by": {
+          "tier": {
+            "1": "6/6",
+            "2": "7/7",
+            "3": "2/2"
+          },
+          "evaluation": {
+            "exact_match_entity": "3/3",
+            "fuzzy_numeric": "5/5",
+            "llm_judge": "5/5",
+            "refusal": "2/2"
+          }
+        },
+        "routing_accuracy": 0.857,
+        "answers_with_unsupported_numbers": 0,
+        "errors": 0,
+        "judge_errors_excluded": 0,
+        "latency_p50_s": 3.0,
+        "latency_p95_s": 4.3,
+        "mean_cost_usd": 0.001,
+        "total_cost_usd": 0.0149,
+        "judge_cost_usd": 0,
+        "mean_prompt_tokens": 9977,
+        "mean_cached_tokens": 5443,
+        "mean_completion_tokens": 390,
+        "mean_tool_calls": 1.8
+      },
+      "rows": [
+        {
+          "id": "h_001",
+          "tier": 1,
+          "evaluation": "fuzzy_numeric",
+          "question": "What was Microsoft's net income in fiscal year 2024?",
+          "gold": "$88.1 billion",
+          "answer": "Microsoft's net income in fiscal year\u202f2024 was $88.1\u202fbillion.\n\n- FY2024 net income from the income statement table: $88,136,000,000 \u2192 $88.1\u202fbillion\u3010SQL: SELECT fiscal_year, net_income FROM income_statements WHERE company_ticker='MSFT' AND period_type='FY' ORDER BY fiscal_year;\u3011.",
+          "passed": true,
+          "score": 1.0,
+          "score_detail": "gold=88136000000",
+          "routing": {
+            "used": [
+              "sql"
+            ],
+            "required": [
+              "sql"
+            ],
+            "ok": true,
+            "extra": []
+          },
+          "tools_used": [
+            "query_database"
+          ],
+          "unsupported_numbers": [],
+          "latency_ms": 1080,
+          "cost_usd": 0.000421,
+          "usage": {
+            "prompt_tokens": 4707,
+            "completion_tokens": 155,
+            "cached_tokens": 2802
+          },
+          "llm_steps": 1,
+          "degraded": false,
+          "models": [
+            "gpt-oss-120b"
+          ]
+        },
+        {
+          "id": "h_002",
+          "tier": 1,
+          "evaluation": "fuzzy_numeric",
+          "question": "What were Alphabet's diluted earnings per share in fiscal year 2025?",
+          "gold": "$10.81",
+          "answer": "Alphabet's diluted earnings per share in fiscal year\u202f2025 was **$10.8** per share.\n\n- FY2025 diluted EPS (GAAP) = 10.81\u202fUSD per share\u3010SQL: SELECT eps_diluted FROM income_statements WHERE company_ticker='GOOGL' AND fiscal_year=2025 AND period_type='FY';\u3011  \n\n**Sources:** [SQL: income_statements]",
+          "passed": true,
+          "score": 1.0,
+          "score_detail": "gold=10.81",
+          "routing": {
+            "used": [
+              "sql"
+            ],
+            "required": [
+              "sql"
+            ],
+            "ok": true,
+            "extra": []
+          },
+          "tools_used": [
+            "query_database"
+          ],
+          "unsupported_numbers": [],
+          "latency_ms": 2097,
+          "cost_usd": 0.000429,
+          "usage": {
+            "prompt_tokens": 4690,
+            "completion_tokens": 173,
+            "cached_tokens": 2805
+          },
+          "llm_steps": 1,
+          "degraded": false,
+          "models": [
+            "gpt-oss-120b"
+          ]
+        },
+        {
+          "id": "h_003",
+          "tier": 2,
+          "evaluation": "fuzzy_numeric",
+          "question": "What was Google's gross margin percentage in its most recent fiscal year?",
+          "gold": "About 59.7% (revenue $402.8B minus cost of revenues $162.5B = gross profit $240.3B). Gross profit is not stored for Alphabet and must be computed.",
+          "answer": "Alphabet\u2019s gross margin in fiscal year\u202f2025 was **59.7\u202f%**.\n\n- FY2025 revenue: $402.8\u202fbillion; cost of revenue: $162.5\u202fbillion (SQL query)\u3010SQL: SELECT revenue, cost_of_revenue FROM income_statements WHERE company_ticker='GOOGL' AND fiscal_year=2025 AND period_type='FY';\u3011  \n- Gross profit = $402.8\u202fb\u202f\u2013\u202f$162.5\u202fb = $240.3\u202fb; gross margin = $240.3\u202fb\u202f/\u202f$402.8\u202fb\u202f\u00d7\u202f100 = **59.7\u202f%** (calculation)\u3010CALC: gross_margin_pct\u3011  \n\n**Sources:** [SQL: income_statements]",
+          "passed": true,
+          "score": 1.0,
+          "score_detail": "gold=59.7",
+          "routing": {
+            "used": [
+              "sql"
+            ],
+            "required": [
+              "sql"
+            ],
+            "ok": true,
+            "extra": []
+          },
+          "tools_used": [
+            "query_database",
+            "calculate"
+          ],
+          "unsupported_numbers": [],
+          "latency_ms": 2347,
+          "cost_usd": 0.000608,
+          "usage": {
+            "prompt_tokens": 7250,
+            "completion_tokens": 369,
+            "cached_tokens": 5193
+          },
+          "llm_steps": 2,
+          "degraded": false,
+          "models": [
+            "gpt-oss-120b"
+          ]
+        },
+        {
+          "id": "h_004",
+          "tier": 2,
+          "evaluation": "exact_match_entity",
+          "question": "Which company spent the largest share of its revenue on research and development in fiscal year 2025, and what was that share?",
+          "gold": "Alphabet, about 15.2% of revenue.",
+          "answer": "Alphabet had the highest share of revenue spent on research and development in fiscal year\u202f2025, at **15.2\u202f%** of its revenue.  \n\n- Apple R&D was $34.55\u202fbillion on $416.2\u202fbillion revenue \u2192 **8.3\u202f%** of revenue.  \n- Microsoft R&D was $32.49\u202fbillion on $281.7\u202fbillion revenue \u2192 **11.5\u202f%** of revenue.  \n- Alphabet R&D was $61.09\u202fbillion on $402.8\u202fbillion revenue \u2192 **15.2\u202f%** of revenue.  \n\n**Sources:** [SQL: income_statements FY2025]",
+          "passed": true,
+          "score": 1.0,
+          "score_detail": "entity Alphabet vs Alphabet (ok); number ok",
+          "routing": {
+            "used": [
+              "sql"
+            ],
+            "required": [
+              "sql"
+            ],
+            "ok": true,
+            "extra": []
+          },
+          "tools_used": [
+            "query_database",
+            "calculate"
+          ],
+          "unsupported_numbers": [],
+          "latency_ms": 1960,
+          "cost_usd": 0.000595,
+          "usage": {
+            "prompt_tokens": 7401,
+            "completion_tokens": 323,
+            "cached_tokens": 5253
+          },
+          "llm_steps": 2,
+          "degraded": false,
+          "models": [
+            "gpt-oss-120b"
+          ]
+        },
+        {
+          "id": "h_005",
+          "tier": 2,
+          "evaluation": "exact_match_entity",
+          "question": "Excluding cost of revenue, which company had the highest operating expenses in FY2025, and how much were they?",
+          "gold": "Alphabet, about $111.3 billion (its reported total costs and expenses of $273.8B include $162.5B cost of revenues). Microsoft $65.4B, Apple $62.2B.",
+          "answer": "Alphabet (GOOGL) had the highest operating expenses excluding cost of revenue in fiscal year\u202f2025, amounting to **$111.3\u202fbillion**.\n\n- Total operating expenses FY2025: GOOGL $273.8\u202fB, cost of revenue $162.5\u202fB \u2192 $273.8\u202fB\u202f\u2212\u202f$162.5\u202fB = $111.3\u202fB\u3010SQL: SELECT company_ticker, fiscal_year, total_operating_expenses, cost_of_revenue FROM income_statements WHERE fiscal_year=2025 AND period_type='FY' AND company_ticker IN ('AAPL','MSFT','GOOGL');\u3011  \n- Apple FY2025 operating expenses (excluding cost of revenue) = $62.2\u202fB\u3010SQL result\u3011  \n- Microsoft FY2025 operating expenses (excluding cost of revenue) = $65.4\u202fB\u3010SQL result\u3011\n\n**Sources:** [SQL: income_statements FY2025 for AAPL, MSFT, GOOGL]",
+          "passed": true,
+          "score": 1.0,
+          "score_detail": "entity Alphabet vs Alphabet (ok); number ok",
+          "routing": {
+            "used": [
+              "sql"
+            ],
+            "required": [
+              "sql"
+            ],
+            "ok": true,
+            "extra": []
+          },
+          "tools_used": [
+            "query_database",
+            "calculate"
+          ],
+          "unsupported_numbers": [],
+          "latency_ms": 2992,
+          "cost_usd": 0.000778,
+          "usage": {
+            "prompt_tokens": 7546,
+            "completion_tokens": 600,
+            "cached_tokens": 5290
+          },
+          "llm_steps": 2,
+          "degraded": false,
+          "models": [
+            "gpt-oss-120b"
+          ]
+        },
+        {
+          "id": "h_006",
+          "tier": 1,
+          "evaluation": "llm_judge",
+          "question": "How much revenue did Apple generate in the United States in fiscal year 2025?",
+          "gold": "Apple does not report United States revenue separately in the provided data; its Americas segment (North and South America) had net sales of about $178.4 billion in FY2025.",
+          "answer": "Apple\u2019s United\u202fStates net revenue for fiscal year\u202f2025 is not disclosed separately; the company reports net sales by geographic segment, with the \u201cAmericas\u201d segment (which includes the United\u202fStates and other countries in the region) amounting to **$178.4\u202fbillion**\u3010AAPL FY2025 10\u2011K p.24\u3011.  \n\n- The 10\u2011K\u2019s MD&A provides a table of net sales by reportable geographic segment for FY\u202f2025; the Americas segment is $178,353\u202fmillion (\u2248\u202f$178.4\u202fbillion)\u3010AAPL FY2025 10\u2011K p.24\u3011.  \n- Apple does not break out United\u202fStates revenue as a distinct line item in its filings; the only available regional figure that contains U.S. sales is the Americas segment, which also includes Canada, Latin America and the Caribbean.  \n\n**Sources:**  \n- [AAPL FY2025 10\u2011K p.24] (Item\u202f7 MD&A, net sales by geographic segment)",
+          "passed": true,
+          "score": 1.0,
+          "score_detail": "The candidate correctly states that Apple does not disclose U.S. revenue separately and that the Americas segment (which includes the U.S.) had net sales of about $178.4 billion ($178,353 million) in FY2025, matching the reference answer exactly. Extra detail about the segment's composition is consistent and correct.",
+          "routing": {
+            "used": [
+              "pdf"
+            ],
+            "required": [
+              "sql"
+            ],
+            "ok": false,
+            "extra": [
+              "pdf"
+            ]
+          },
+          "tools_used": [
+            "search_filings"
+          ],
+          "unsupported_numbers": [],
+          "latency_ms": 2971,
+          "cost_usd": 0.001137,
+          "usage": {
+            "prompt_tokens": 8367,
+            "completion_tokens": 323,
+            "cached_tokens": 2310
+          },
+          "llm_steps": 1,
+          "degraded": false,
+          "models": [
+            "gpt-oss-120b"
+          ]
+        },
+        {
+          "id": "h_007",
+          "tier": 1,
+          "evaluation": "refusal",
+          "question": "What was Amazon's total revenue in 2025?",
+          "gold": "Not in the provided data (only Apple, Microsoft and Alphabet are covered).",
+          "answer": "Amazon is not one of the companies covered by the allowed data sources (Apple, Microsoft, or Alphabet/Google). Therefore, its 2025 total revenue is **not in the provided data**.",
+          "passed": true,
+          "score": 1.0,
+          "score_detail": "declined correctly",
+          "routing": {
+            "used": [],
+            "required": [],
+            "ok": true,
+            "extra": []
+          },
+          "tools_used": [],
+          "unsupported_numbers": [],
+          "latency_ms": 688,
+          "cost_usd": 7.5e-05,
+          "usage": {
+            "prompt_tokens": 2305,
+            "completion_tokens": 64,
+            "cached_tokens": 2291
+          },
+          "llm_steps": 0,
+          "degraded": false,
+          "models": [
+            "gpt-oss-120b"
+          ]
+        },
+        {
+          "id": "h_008",
+          "tier": 1,
+          "evaluation": "refusal",
+          "question": "What was Apple's total revenue in fiscal year 2021?",
+          "gold": "Not in the provided data (financials cover FY2023-FY2025).",
+          "answer": "Apple\u2019s total revenue for fiscal year\u202f2021 is not available in the provided database (which covers FY\u202f2023\u2011FY\u202f2025) and does not appear in the FY\u202f2024 or FY\u202f2025 Form\u202f10\u2011K filings, which only include the three most recent years.  \n\n**Sources:**  \n- Database tables (FY\u202f2023\u2011FY\u202f2025 only) \u2013 no FY\u202f2021 row.  \n- FY\u202f2024 Form\u202f10\u2011K (Item\u202f7) \u2013 contains 2022\u20112024 data, no 2021.  \n- FY\u202f2025 Form\u202f10\u2011K (Item\u202f7) \u2013 contains 2023\u20112025 data, no 2021.",
+          "passed": true,
+          "score": 1.0,
+          "score_detail": "declined correctly",
+          "routing": {
+            "used": [
+              "pdf"
+            ],
+            "required": [
+              "sql"
+            ],
+            "ok": false,
+            "extra": [
+              "pdf"
+            ]
+          },
+          "tools_used": [
+            "search_filings"
+          ],
+          "unsupported_numbers": [],
+          "latency_ms": 3027,
+          "cost_usd": 0.001629,
+          "usage": {
+            "prompt_tokens": 16502,
+            "completion_tokens": 448,
+            "cached_tokens": 8262
+          },
+          "llm_steps": 2,
+          "degraded": false,
+          "models": [
+            "gpt-oss-120b"
+          ]
+        },
+        {
+          "id": "h_009",
+          "tier": 2,
+          "evaluation": "llm_judge",
+          "question": "How fast did Microsoft's Intelligent Cloud segment revenue grow in fiscal year 2025, and what does the 10-K say drove it?",
+          "gold": "Intelligent Cloud revenue grew about 21.5% from $87.5B to $106.3B (restated basis). The FY2025 10-K attributes it to Azure and other cloud services, which grew 34%, driven by demand for its portfolio of services.",
+          "answer": "Microsoft\u2019s Intelligent\u202fCloud segment revenue grew **21.5% in fiscal\u202f2025** (from $87.5\u202fbillion in FY\u202f2024 to $106.3\u202fbillion in FY\u202f2025)\u202f\u3010{\"growth_pct\":21.495701}\u3011.  \n\n- The FY\u202f2025 10\u2011K MD&A states that **Intelligent\u202fCloud revenue increased $18.8\u202fbillion or 21%**, driven primarily by **Azure and other cloud services**, which grew 34% on the back of strong demand for Microsoft\u2019s cloud and AI portfolio\u3010MSFT FY2025 10\u2011K p.38\u3011.  \n- Server products and cloud services revenue rose $18.6\u202fbillion (23%) because of this Azure growth, while enterprise and partner services contributed a smaller $166\u202fmillion increase\u3010MSFT FY2025 10\u2011K p.38\u3011.  \n\n**Sources**  \n- [SQL: segment_revenue] (MSFT Intelligent Cloud FY2023\u2011FY2025)  \n- [MSFT FY2025 10\u2011K p.38] (Item\u202f7 MD&A \u2013 Intelligent Cloud revenue increase and driver)",
+          "passed": true,
+          "score": 1.0,
+          "score_detail": "The candidate correctly states 21.5% growth from $87.5B to $106.3B and attributes it to Azure and other cloud services growing 34%, driven by demand for Microsoft's cloud/AI portfolio. All key facts and numbers in the reference are present, and the additional detail (server products +$18.6B, enterprise services +$166M) is consistent and does not contradict the reference.",
+          "routing": {
+            "used": [
+              "pdf",
+              "sql"
+            ],
+            "required": [
+              "pdf",
+              "sql"
+            ],
+            "ok": true,
+            "extra": []
+          },
+          "tools_used": [
+            "query_database",
+            "calculate",
+            "search_filings"
+          ],
+          "unsupported_numbers": [],
+          "latency_ms": 3390,
+          "cost_usd": 0.001269,
+          "usage": {
+            "prompt_tokens": 13350,
+            "completion_tokens": 522,
+            "cached_tokens": 7756
+          },
+          "llm_steps": 3,
+          "degraded": false,
+          "models": [
+            "gpt-oss-120b"
+          ]
+        },
+        {
+          "id": "h_010",
+          "tier": 3,
+          "evaluation": "llm_judge",
+          "question": "How did Google Cloud's share of Alphabet's total revenue change from fiscal year 2024 to fiscal year 2025?",
+          "gold": "Google Cloud rose from about 12.4% of revenue ($43.2B of $350.0B) in FY2024 to about 14.6% ($58.7B of $402.8B) in FY2025, an increase of about 2.2 percentage points.",
+          "answer": "Alphabet's Google Cloud revenue represented **12.4% of total revenue in FY2024** and **14.6% in FY2025**, a **18.0% increase in its share** year\u2011over\u2011year.\n\n- FY2024 total revenue: $350.0\u202fbillion; Google Cloud revenue: $43.2\u202fbillion \u2192 share\u202f=\u202f12.35%\u3010calculate\u3011.  \n- FY2025 total revenue: $402.8\u202fbillion; Google Cloud revenue: $58.7\u202fbillion \u2192 share\u202f=\u202f14.57%\u3010calculate\u3011.  \n- Share change: ((14.57\u202f%\u202f\u2212\u202f12.35\u202f%)\u202f/\u202f12.35\u202f%)\u202f\u00d7\u202f100\u202f=\u202f17.99% \u2192 **\u2248\u202f18.0% increase**\u3010calculate\u3011.\n\n**Sources:**  \n- Alphabet income statement FY2024 & FY2025 revenues\u3010SQL: income_statements\u3011  \n- Alphabet segment revenue for Google Cloud FY2024 & FY2025\u3010SQL: segment_revenue\u3011",
+          "passed": true,
+          "score": 1.0,
+          "score_detail": "All key facts match the reference: 12.4% share in FY2024 ($43.2B of $350.0B) rising to 14.6% in FY2025 ($58.7B of $402.8B). The candidate expresses the change as an 18.0% relative increase rather than 2.2 percentage points, but this is mathematically equivalent (14.57% \u2212 12.35% = 2.22 pp) and does not contradict the reference; it is extra correct detail.",
+          "routing": {
+            "used": [
+              "sql"
+            ],
+            "required": [
+              "sql"
+            ],
+            "ok": true,
+            "extra": []
+          },
+          "tools_used": [
+            "query_database",
+            "calculate"
+          ],
+          "unsupported_numbers": [],
+          "latency_ms": 3014,
+          "cost_usd": 0.001037,
+          "usage": {
+            "prompt_tokens": 10020,
+            "completion_tokens": 512,
+            "cached_tokens": 5724
+          },
+          "llm_steps": 3,
+          "degraded": false,
+          "models": [
+            "gpt-oss-120b"
+          ]
+        },
+        {
+          "id": "h_011",
+          "tier": 2,
+          "evaluation": "fuzzy_numeric",
+          "question": "What was YouTube ads revenue in fiscal year 2023?",
+          "gold": "$31.5 billion",
+          "answer": "Alphabet\u2019s YouTube ads revenue in fiscal year\u202f2023 was **$31.5\u202fbillion**.\n\n- FY2023 YouTube ads revenue =\u202f31,510\u202fmillion dollars (as shown in the \u201cRevenues by type\u201d table of the FY2024 10\u2011K)\u3010GOOGL FY2024 10-K p.39\u3011.  \n\n**Sources:** [GOOGL FY2024 10\u2011K p.39]",
+          "passed": true,
+          "score": 1.0,
+          "score_detail": "gold=31510000000",
+          "routing": {
+            "used": [
+              "pdf"
+            ],
+            "required": [
+              "pdf"
+            ],
+            "ok": true,
+            "extra": []
+          },
+          "tools_used": [
+            "search_filings"
+          ],
+          "unsupported_numbers": [],
+          "latency_ms": 1530,
+          "cost_usd": 0.000741,
+          "usage": {
+            "prompt_tokens": 8163,
+            "completion_tokens": 229,
+            "cached_tokens": 4597
+          },
+          "llm_steps": 1,
+          "degraded": false,
+          "models": [
+            "gpt-oss-120b"
+          ]
+        },
+        {
+          "id": "h_012",
+          "tier": 3,
+          "evaluation": "llm_judge",
+          "question": "What Intelligent Cloud revenue did Microsoft report for fiscal year 2024 in its FY2024 10-K, and how does that compare with the figure used for FY2024 after the August 2024 segment change?",
+          "gold": "The FY2024 10-K reported Intelligent Cloud revenue of about $105.4 billion under the old segment definitions; after the restatement, FY2024 Intelligent Cloud revenue is about $87.5 billion (the database / FY2025 10-K basis), about $17.9 billion lower because some businesses moved to other segments.",
+          "answer": "Microsoft reported Intelligent\u202fCloud revenue of **$105.4\u202fbillion** for fiscal year\u202f2024 in its FY\u202f2024 Form\u202f10\u2011K. After the August\u202f2024 segment restatement, the same fiscal\u2011year figure is presented as **$87.5\u202fbillion** in the FY\u202f2025 Form\u202f10\u2011K (which includes the recast prior\u2011period amounts).  \n\n- FY\u202f2024 10\u2011K segment table shows Intelligent\u202fCloud revenue\u202f=\u202f$105,362\u202fmillion\u3010MSFT FY2024 10\u2011K p.43\u3011.  \n- FY\u202f2025 10\u2011K Note\u202f18 (Segment Information) recasts FY\u202f2024 Intelligent\u202fCloud revenue\u202f=\u202f$87,464\u202fmillion\u3010MSFT FY2025 10\u2011K p.79\u3011.  \n\n**Comparison:** the restated figure is about **$17.9\u202fbillion lower** (\u2248\u202f17\u202f% decrease) than the original FY\u202f2024 filing.  \n\nSources: [MSFT FY2024 10\u2011K p.43], [MSFT FY2025 10\u2011K p.79]",
+          "passed": true,
+          "score": 1.0,
+          "score_detail": "The candidate correctly states the FY2024 10-K Intelligent Cloud revenue of $105.4 billion ($105,362M), the restated FY2024 figure of $87.5 billion ($87,464M) per the FY2025 10-K after the August 2024 segment change, and the ~$17.9 billion decrease. All key facts and numbers in the reference are present with no contradictions; the extra detail (exact figures, percentage decrease, citations) is consistent with the reference.",
+          "routing": {
+            "used": [
+              "pdf",
+              "sql"
+            ],
+            "required": [
+              "pdf",
+              "sql"
+            ],
+            "ok": true,
+            "extra": []
+          },
+          "tools_used": [
+            "query_database",
+            "search_filings"
+          ],
+          "unsupported_numbers": [],
+          "latency_ms": 5915,
+          "cost_usd": 0.002468,
+          "usage": {
+            "prompt_tokens": 20451,
+            "completion_tokens": 696,
+            "cached_tokens": 7537
+          },
+          "llm_steps": 3,
+          "degraded": false,
+          "models": [
+            "gpt-oss-120b"
+          ]
+        },
+        {
+          "id": "h_013",
+          "tier": 1,
+          "evaluation": "fuzzy_numeric",
+          "question": "What was Apple's current ratio in fiscal year 2025?",
+          "gold": "About 0.89 (current assets $148.0B / current liabilities $165.6B).",
+          "answer": "Apple's current ratio in fiscal year\u202f2025 was **0.9** (current assets $148.0\u202fbillion \u00f7 current liabilities $165.6\u202fbillion).\n\n- Total current assets FY2025: $147,957,000,000 (\u2248\u202f$148.0\u202fbillion)\u3010SQL: SELECT total_current_assets, total_current_liabilities FROM balance_sheets WHERE company_ticker='AAPL' AND fiscal_year=2025 AND period_type='FY';\u3011  \n- Total current liabilities FY2025: $165,631,000,000 (\u2248\u202f$165.6\u202fbillion)\u3010SQL: SELECT total_current_assets, total_current_liabilities FROM balance_sheets WHERE company_ticker='AAPL' AND fiscal_year=2025 AND period_type='FY';\u3011  \n- Current ratio = 147,957,000,000\u202f/\u202f165,631,000,000 = **0.893** (rounded to one decimal)\u3010calc: {\"current_ratio\":\"147957000000 / 165631000000\"}\u3011\n\n**Sources:** [SQL query result]",
+          "passed": true,
+          "score": 1.0,
+          "score_detail": "gold=0.89",
+          "routing": {
+            "used": [
+              "sql"
+            ],
+            "required": [
+              "sql"
+            ],
+            "ok": true,
+            "extra": []
+          },
+          "tools_used": [
+            "query_database",
+            "calculate"
+          ],
+          "unsupported_numbers": [],
+          "latency_ms": 4059,
+          "cost_usd": 0.001119,
+          "usage": {
+            "prompt_tokens": 9825,
+            "completion_tokens": 577,
+            "cached_tokens": 5193
+          },
+          "llm_steps": 2,
+          "degraded": false,
+          "models": [
+            "gpt-oss-120b"
+          ]
+        },
+        {
+          "id": "h_014",
+          "tier": 2,
+          "evaluation": "llm_judge",
+          "question": "What was Apple's Services gross margin percentage in fiscal year 2025, and how did it compare with Products?",
+          "gold": "Services gross margin was 75.4% in FY2025 (up from 73.9% in FY2024), versus 36.8% for Products.",
+          "answer": "Apple's Services gross margin was **75.4%** in fiscal year\u202f2025, while its Products gross margin was **36.8%** for the same year.\n\n- Services gross margin percentage FY2025:\u202f75.4% (Table \u201cGross Margin percentage\u201d in Item\u202f7 MD&A)\u3010AAPL FY2025 10\u2011K p.25\u3011  \n- Products gross margin percentage FY2025:\u202f36.8% (same table)\u3010AAPL FY2025 10\u2011K p.25\u3011  \n- Difference (Services\u202f\u2013\u202fProducts):\u202f**38.6\u202fpercentage points**\u3010calculated\u3011.\n\nSources: [AAPL FY2025 10\u2011K p.25]",
+          "passed": true,
+          "score": 1.0,
+          "score_detail": "The candidate correctly states Services gross margin of 75.4% and Products gross margin of 36.8% for FY2025, matching the reference exactly, and adds a correct calculated difference of 38.6 percentage points. The only omitted element is the FY2024 Services figure (73.9%), which is supplementary context in the reference rather than a key fact required by the question (the question asks for the FY2025 figure and its comparison with Products, both of which are answered correctly).",
+          "routing": {
+            "used": [
+              "pdf"
+            ],
+            "required": [
+              "pdf"
+            ],
+            "ok": true,
+            "extra": []
+          },
+          "tools_used": [
+            "search_filings",
+            "calculate"
+          ],
+          "unsupported_numbers": [],
+          "latency_ms": 4312,
+          "cost_usd": 0.002001,
+          "usage": {
+            "prompt_tokens": 21574,
+            "completion_tokens": 496,
+            "cached_tokens": 11354
+          },
+          "llm_steps": 2,
+          "degraded": false,
+          "models": [
+            "gpt-oss-120b"
+          ]
+        },
+        {
+          "id": "h_015",
+          "tier": 2,
+          "evaluation": "exact_match_entity",
+          "question": "Which company grew net income the fastest between its two most recent fiscal years, and by how much?",
+          "gold": "Alphabet, with net income up about 32.0% (from $100.1B to $132.2B). Apple grew about 19.5% and Microsoft about 15.5%.",
+          "answer": "Alphabet had the fastest net\u2011income growth between its two most recent fiscal years, increasing by **32.0%** from FY2024 to FY2025.\n\n- **Alphabet (GOOGL)** net income FY2024: $100.1\u202fbillion; FY2025: $132.2\u202fbillion \u2192 growth\u202f=\u202f32.0%\u3010calculate\u3011  \n- **Apple (AAPL)** net income grew 19.5% over the same period\u3010calculate\u3011  \n- **Microsoft (MSFT)** net income grew 15.5% over the same period\u3010calculate\u3011\n\n**Sources:**  \n- [SQL: income_statements] (net_income values for FY2024 and FY2025)",
+          "passed": true,
+          "score": 1.0,
+          "score_detail": "entity Alphabet vs Alphabet (ok); number ok",
+          "routing": {
+            "used": [
+              "sql"
+            ],
+            "required": [
+              "sql"
+            ],
+            "ok": true,
+            "extra": []
+          },
+          "tools_used": [
+            "query_database",
+            "calculate"
+          ],
+          "unsupported_numbers": [],
+          "latency_ms": 2346,
+          "cost_usd": 0.000633,
+          "usage": {
+            "prompt_tokens": 7518,
+            "completion_tokens": 364,
+            "cached_tokens": 5285
+          },
+          "llm_steps": 2,
+          "degraded": false,
+          "models": [
+            "gpt-oss-120b"
+          ]
+        }
+      ]
+    },
+    {
+      "run": 2,
+      "summary": {
+        "n": 15,
+        "accuracy": 1.0,
+        "mean_score": 1.0,
+        "by": {
+          "tier": {
+            "1": "6/6",
+            "2": "7/7",
+            "3": "2/2"
+          },
+          "evaluation": {
+            "exact_match_entity": "3/3",
+            "fuzzy_numeric": "5/5",
+            "llm_judge": "5/5",
+            "refusal": "2/2"
+          }
+        },
+        "routing_accuracy": 0.786,
+        "answers_with_unsupported_numbers": 0,
+        "errors": 0,
+        "judge_errors_excluded": 0,
+        "latency_p50_s": 2.1,
+        "latency_p95_s": 4.5,
+        "mean_cost_usd": 0.00073,
+        "total_cost_usd": 0.011,
+        "judge_cost_usd": 0,
+        "mean_prompt_tokens": 9074,
+        "mean_cached_tokens": 6306,
+        "mean_completion_tokens": 367,
+        "mean_tool_calls": 1.7
+      },
+      "rows": [
+        {
+          "id": "h_001",
+          "tier": 1,
+          "evaluation": "fuzzy_numeric",
+          "question": "What was Microsoft's net income in fiscal year 2024?",
+          "gold": "$88.1 billion",
+          "answer": "Microsoft's net income in fiscal year\u202f2024 was **$88.1\u202fbillion**.\n\n- FY2024 net income from the income\u2011statement table:\u202f$88,136,000,000\u3010SQL: SELECT fiscal_year, net_income FROM income_statements WHERE company_ticker='MSFT' AND period_type='FY' ORDER BY fiscal_year;\u3011  \n\n**Sources:** [SQL: income_statements]",
+          "passed": true,
+          "score": 1.0,
+          "score_detail": "gold=88136000000",
+          "routing": {
+            "used": [
+              "sql"
+            ],
+            "required": [
+              "sql"
+            ],
+            "ok": true,
+            "extra": []
+          },
+          "tools_used": [
+            "query_database"
+          ],
+          "unsupported_numbers": [],
+          "latency_ms": 1885,
+          "cost_usd": 0.000196,
+          "usage": {
+            "prompt_tokens": 4707,
+            "completion_tokens": 184,
+            "cached_tokens": 4596
+          },
+          "llm_steps": 1,
+          "degraded": false,
+          "models": [
+            "gpt-oss-120b"
+          ]
+        },
+        {
+          "id": "h_002",
+          "tier": 1,
+          "evaluation": "fuzzy_numeric",
+          "question": "What were Alphabet's diluted earnings per share in fiscal year 2025?",
+          "gold": "$10.81",
+          "answer": "Alphabet's diluted earnings per share in fiscal year\u202f2025 was **$10.8** per share.\n\n- FY2025 diluted EPS (GAAP) = 10.81\u202fUSD per share\u3010SQL: SELECT eps_diluted FROM income_statements WHERE company_ticker='GOOGL' AND fiscal_year=2025 AND period_type='FY';\u3011  \n\n**Sources:** [SQL: income_statements]",
+          "passed": true,
+          "score": 1.0,
+          "score_detail": "gold=10.81",
+          "routing": {
+            "used": [
+              "sql"
+            ],
+            "required": [
+              "sql"
+            ],
+            "ok": true,
+            "extra": []
+          },
+          "tools_used": [
+            "query_database"
+          ],
+          "unsupported_numbers": [],
+          "latency_ms": 1398,
+          "cost_usd": 0.000429,
+          "usage": {
+            "prompt_tokens": 4690,
+            "completion_tokens": 173,
+            "cached_tokens": 2805
+          },
+          "llm_steps": 1,
+          "degraded": false,
+          "models": [
+            "gpt-oss-120b"
+          ]
+        },
+        {
+          "id": "h_003",
+          "tier": 2,
+          "evaluation": "fuzzy_numeric",
+          "question": "What was Google's gross margin percentage in its most recent fiscal year?",
+          "gold": "About 59.7% (revenue $402.8B minus cost of revenues $162.5B = gross profit $240.3B). Gross profit is not stored for Alphabet and must be computed.",
+          "answer": "Alphabet\u2019s gross margin in fiscal year\u202f2025 was **59.7\u202f%**.\n\n- FY2025 revenue: $402.8\u202fbillion; cost of revenue: $162.5\u202fbillion (SQL query)\u3010SQL: SELECT revenue, cost_of_revenue FROM income_statements WHERE company_ticker='GOOGL' AND fiscal_year=2025 AND period_type='FY';\u3011  \n- Gross profit = $402.8\u202fb\u202f\u2013\u202f$162.5\u202fb = $240.3\u202fb; gross margin = $240.3\u202fb\u202f/\u202f$402.8\u202fb\u202f\u00d7\u202f100 = **59.7\u202f%** (calculation)\u3010CALC: gross_margin_pct\u3011  \n\n**Sources:** [SQL: income_statements]",
+          "passed": true,
+          "score": 1.0,
+          "score_detail": "gold=59.7",
+          "routing": {
+            "used": [
+              "sql"
+            ],
+            "required": [
+              "sql"
+            ],
+            "ok": true,
+            "extra": []
+          },
+          "tools_used": [
+            "query_database",
+            "calculate"
+          ],
+          "unsupported_numbers": [],
+          "latency_ms": 2179,
+          "cost_usd": 0.000608,
+          "usage": {
+            "prompt_tokens": 7250,
+            "completion_tokens": 369,
+            "cached_tokens": 5193
+          },
+          "llm_steps": 2,
+          "degraded": false,
+          "models": [
+            "gpt-oss-120b"
+          ]
+        },
+        {
+          "id": "h_004",
+          "tier": 2,
+          "evaluation": "exact_match_entity",
+          "question": "Which company spent the largest share of its revenue on research and development in fiscal year 2025, and what was that share?",
+          "gold": "Alphabet, about 15.2% of revenue.",
+          "answer": "Alphabet had the highest share of revenue spent on research and development in fiscal year\u202f2025, at **15.2\u202f%** of its revenue.\n\n- Apple R&D spend was $34.55\u202fbillion on $416.2\u202fbillion revenue \u2192 **8.3\u202f%** of revenue\u3010SQL: income_statements\u3011.  \n- Microsoft R&D spend was $32.49\u202fbillion on $281.7\u202fbillion revenue \u2192 **11.5\u202f%** of revenue\u3010SQL: income_statements\u3011.  \n- Alphabet R&D spend was $61.09\u202fbillion on $402.8\u202fbillion revenue \u2192 **15.2\u202f%** of revenue\u3010SQL: income_statements\u3011.  \n\n**Sources:** [SQL: income_statements]",
+          "passed": true,
+          "score": 1.0,
+          "score_detail": "entity Alphabet vs Alphabet (ok); number ok",
+          "routing": {
+            "used": [
+              "sql"
+            ],
+            "required": [
+              "sql"
+            ],
+            "ok": true,
+            "extra": []
+          },
+          "tools_used": [
+            "query_database",
+            "calculate"
+          ],
+          "unsupported_numbers": [],
+          "latency_ms": 2127,
+          "cost_usd": 0.000366,
+          "usage": {
+            "prompt_tokens": 7420,
+            "completion_tokens": 341,
+            "cached_tokens": 7046
+          },
+          "llm_steps": 2,
+          "degraded": false,
+          "models": [
+            "gpt-oss-120b"
+          ]
+        },
+        {
+          "id": "h_005",
+          "tier": 2,
+          "evaluation": "exact_match_entity",
+          "question": "Excluding cost of revenue, which company had the highest operating expenses in FY2025, and how much were they?",
+          "gold": "Alphabet, about $111.3 billion (its reported total costs and expenses of $273.8B include $162.5B cost of revenues). Microsoft $65.4B, Apple $62.2B.",
+          "answer": "Alphabet (GOOGL) had the highest operating expenses excluding cost of revenue in fiscal year\u202f2025, amounting to **$111.3\u202fbillion**.\n\n- Apple\u2019s total operating expenses were $62.2\u202fbillion; cost of revenue $220.96\u202fbillion, so OPEX excl. cost = $62.2\u202fbillion\u3010SQL: SELECT company_ticker, fiscal_year, total_operating_expenses, cost_of_revenue FROM income_statements WHERE fiscal_year=2025 AND period_type='FY' AND company_ticker IN ('AAPL','MSFT','GOOGL');\u3011  \n- Microsoft\u2019s total operating expenses were $65.4\u202fbillion; cost of revenue $87.83\u202fbillion, so OPEX excl. cost = $65.4\u202fbillion\u3010SQL same as above\u3011  \n- Alphabet\u2019s total operating expenses were $273.8\u202fbillion; cost of revenue $162.5\u202fbillion, so OPEX excl. cost = $111.3\u202fbillion (calculated)\u3010SQL same as above\u3011\u3010calc\u3011  \n\n**Sources:**  \n- [SQL: income_statements FY2025]",
+          "passed": true,
+          "score": 1.0,
+          "score_detail": "entity Alphabet vs Alphabet (ok); number ok",
+          "routing": {
+            "used": [
+              "sql"
+            ],
+            "required": [
+              "sql"
+            ],
+            "ok": true,
+            "extra": []
+          },
+          "tools_used": [
+            "query_database",
+            "calculate"
+          ],
+          "unsupported_numbers": [],
+          "latency_ms": 3171,
+          "cost_usd": 0.000799,
+          "usage": {
+            "prompt_tokens": 7551,
+            "completion_tokens": 634,
+            "cached_tokens": 5290
+          },
+          "llm_steps": 2,
+          "degraded": false,
+          "models": [
+            "gpt-oss-120b"
+          ]
+        },
+        {
+          "id": "h_006",
+          "tier": 1,
+          "evaluation": "llm_judge",
+          "question": "How much revenue did Apple generate in the United States in fiscal year 2025?",
+          "gold": "Apple does not report United States revenue separately in the provided data; its Americas segment (North and South America) had net sales of about $178.4 billion in FY2025.",
+          "answer": "Apple\u2019s United\u202fStates net sales in fiscal\u202f2025 are not disclosed separately; the company reports net sales for the \u201cAmericas\u201d segment, which includes the United\u202fStates together with Canada, Latin\u202fAmerica and the Caribbean. The Americas segment generated **$178.4\u202fbillion** in FY\u202f2025\u3010AAPL FY2025 10\u2011K p.24\u3011.  \n\n- The 10\u2011K table lists \u201cAmericas\u201d net sales of $178,353\u202fmillion for FY\u202f2025.  \n- Apple\u2019s filing does not break out U.S. revenue from the rest of the Americas region, so a U.S.\u2013only figure is not available in the provided data.  \n\n**Sources:**  \n- [AAPL FY2025 10\u2011K p.24] (Item\u202f7 MD&A, net sales by reportable segment).",
+          "passed": true,
+          "score": 1.0,
+          "score_detail": "The candidate correctly states that Apple does not disclose U.S. revenue separately and reports the Americas segment net sales of $178.4 billion ($178,353 million) for FY2025, matching the reference exactly. The additional detail about the segment's composition (Canada, Latin America, Caribbean) is consistent and correct.",
+          "routing": {
+            "used": [
+              "pdf"
+            ],
+            "required": [
+              "sql"
+            ],
+            "ok": false,
+            "extra": [
+              "pdf"
+            ]
+          },
+          "tools_used": [
+            "search_filings"
+          ],
+          "unsupported_numbers": [],
+          "latency_ms": 1960,
+          "cost_usd": 0.000801,
+          "usage": {
+            "prompt_tokens": 8367,
+            "completion_tokens": 279,
+            "cached_tokens": 4602
+          },
+          "llm_steps": 1,
+          "degraded": false,
+          "models": [
+            "gpt-oss-120b"
+          ]
+        },
+        {
+          "id": "h_007",
+          "tier": 1,
+          "evaluation": "refusal",
+          "question": "What was Amazon's total revenue in 2025?",
+          "gold": "Not in the provided data (only Apple, Microsoft and Alphabet are covered).",
+          "answer": "Amazon is not one of the companies covered by the allowed data sources (Apple, Microsoft, or Alphabet/Google). Therefore, its total revenue for fiscal year\u202f2025 is not in the provided data.",
+          "passed": true,
+          "score": 1.0,
+          "score_detail": "declined correctly",
+          "routing": {
+            "used": [],
+            "required": [],
+            "ok": true,
+            "extra": []
+          },
+          "tools_used": [],
+          "unsupported_numbers": [],
+          "latency_ms": 453,
+          "cost_usd": 7.5e-05,
+          "usage": {
+            "prompt_tokens": 2305,
+            "completion_tokens": 64,
+            "cached_tokens": 2293
+          },
+          "llm_steps": 0,
+          "degraded": false,
+          "models": [
+            "gpt-oss-120b"
+          ]
+        },
+        {
+          "id": "h_008",
+          "tier": 1,
+          "evaluation": "refusal",
+          "question": "What was Apple's total revenue in fiscal year 2021?",
+          "gold": "Not in the provided data (financials cover FY2023-FY2025).",
+          "answer": "Apple\u2019s total revenue for fiscal year\u202f2021 is not in the provided data. The database contains annual figures only for FY\u202f2023\u2011FY\u202f2025, and the FY\u202f2024 and FY\u202f2025 10\u2011K filings include prior\u2011year numbers only back to FY\u202f2023. No source contains the FY\u202f2021 revenue figure.  \n\n**Sources:** Not in the provided data.",
+          "passed": true,
+          "score": 1.0,
+          "score_detail": "declined correctly",
+          "routing": {
+            "used": [],
+            "required": [
+              "sql"
+            ],
+            "ok": false,
+            "extra": []
+          },
+          "tools_used": [],
+          "unsupported_numbers": [],
+          "latency_ms": 754,
+          "cost_usd": 0.000122,
+          "usage": {
+            "prompt_tokens": 2306,
+            "completion_tokens": 142,
+            "cached_tokens": 2291
+          },
+          "llm_steps": 0,
+          "degraded": false,
+          "models": [
+            "gpt-oss-120b"
+          ]
+        },
+        {
+          "id": "h_009",
+          "tier": 2,
+          "evaluation": "llm_judge",
+          "question": "How fast did Microsoft's Intelligent Cloud segment revenue grow in fiscal year 2025, and what does the 10-K say drove it?",
+          "gold": "Intelligent Cloud revenue grew about 21.5% from $87.5B to $106.3B (restated basis). The FY2025 10-K attributes it to Azure and other cloud services, which grew 34%, driven by demand for its portfolio of services.",
+          "answer": "Microsoft\u2019s Intelligent\u202fCloud segment revenue grew **21.5% in fiscal\u202f2025** (from $87.5\u202fbillion in FY\u202f2024 to $106.3\u202fbillion in FY\u202f2025)\u202f\u3010{\"growth_pct\":21.495701}\u3011.  \n\n- The FY\u202f2025 10\u2011K MD&A states that **Intelligent\u202fCloud revenue increased $18.8\u202fbillion or 21%**, driven primarily by **Azure and other cloud services**, which grew 34% on the back of strong demand for Microsoft\u2019s cloud and AI portfolio\u3010MSFT FY2025 10\u2011K p.38\u3011.  \n- Server products and cloud services revenue rose $18.6\u202fbillion (23%) because of this Azure growth, while enterprise and partner services contributed a smaller $166\u202fmillion increase\u3010MSFT FY2025 10\u2011K p.38\u3011.  \n\n**Sources**  \n- [SQL: segment_revenue] (MSFT Intelligent Cloud FY2023\u2011FY2025)  \n- [MSFT FY2025 10\u2011K p.38] (Item\u202f7 MD&A \u2013 Intelligent Cloud revenue increase and driver)",
+          "passed": true,
+          "score": 1.0,
+          "score_detail": "The candidate matches all key facts: 21.5% growth from $87.5B to $106.3B, and the driver being Azure and other cloud services growing 34% due to demand for Microsoft's cloud/AI portfolio. Additional detail (server products +$18.6B, enterprise services +$166M) is consistent and extra correct detail is permitted.",
+          "routing": {
+            "used": [
+              "pdf",
+              "sql"
+            ],
+            "required": [
+              "pdf",
+              "sql"
+            ],
+            "ok": true,
+            "extra": []
+          },
+          "tools_used": [
+            "query_database",
+            "calculate",
+            "search_filings"
+          ],
+          "unsupported_numbers": [],
+          "latency_ms": 4687,
+          "cost_usd": 0.001269,
+          "usage": {
+            "prompt_tokens": 13350,
+            "completion_tokens": 522,
+            "cached_tokens": 7756
+          },
+          "llm_steps": 3,
+          "degraded": false,
+          "models": [
+            "gpt-oss-120b"
+          ]
+        },
+        {
+          "id": "h_010",
+          "tier": 3,
+          "evaluation": "llm_judge",
+          "question": "How did Google Cloud's share of Alphabet's total revenue change from fiscal year 2024 to fiscal year 2025?",
+          "gold": "Google Cloud rose from about 12.4% of revenue ($43.2B of $350.0B) in FY2024 to about 14.6% ($58.7B of $402.8B) in FY2025, an increase of about 2.2 percentage points.",
+          "answer": "Alphabet\u2019s Google Cloud revenue accounted for **12.4% of total revenue in FY2024** and **14.6% in FY2025**, a rise of about **2.2 percentage points**.\n\n- FY2024 total revenue: $350.0\u202fbillion; Google Cloud revenue: $43.2\u202fbillion \u2192 share\u202f=\u202f12.35%\u3010calculate\u3011.  \n- FY2025 total revenue: $402.8\u202fbillion; Google Cloud revenue: $58.7\u202fbillion \u2192 share\u202f=\u202f14.57%\u3010calculate\u3011.  \n\n**Change:** 14.57%\u202f\u2212\u202f12.35%\u202f=\u202f2.22\u202fpercentage points\u3010calculate\u3011.\n\nSources:  \n- [SQL: income_statements] (Alphabet FY2024 & FY2025 total revenue)  \n- [SQL: segment_revenue] (Alphabet Google Cloud FY2024 & FY2025 revenue)",
+          "passed": true,
+          "score": 1.0,
+          "score_detail": "The candidate matches every key fact in the reference: Google Cloud share of 12.4% in FY2024 ($43.2B of $350.0B) rising to 14.6% in FY2025 ($58.7B of $402.8B), an increase of about 2.2 percentage points. The more precise figures (12.35%, 14.57%, 2.22 pp) are consistent rounding refinements, not contradictions.",
+          "routing": {
+            "used": [
+              "sql"
+            ],
+            "required": [
+              "sql"
+            ],
+            "ok": true,
+            "extra": []
+          },
+          "tools_used": [
+            "query_database",
+            "calculate"
+          ],
+          "unsupported_numbers": [],
+          "latency_ms": 4484,
+          "cost_usd": 0.001093,
+          "usage": {
+            "prompt_tokens": 15875,
+            "completion_tokens": 696,
+            "cached_tokens": 12633
+          },
+          "llm_steps": 4,
+          "degraded": false,
+          "models": [
+            "gpt-oss-120b"
+          ]
+        },
+        {
+          "id": "h_011",
+          "tier": 2,
+          "evaluation": "fuzzy_numeric",
+          "question": "What was YouTube ads revenue in fiscal year 2023?",
+          "gold": "$31.5 billion",
+          "answer": "Alphabet\u2019s YouTube ads revenue in fiscal year\u202f2023 was **$31.5\u202fbillion**.\n\n- FY2023 YouTube ads revenue =\u202f31,510\u202fmillion dollars (shown in the \u201cRevenues by type\u201d table of the FY2024 10\u2011K)\u3010GOOGL FY2024 10-K p.39\u3011.  \n\n**Sources:** [GOOGL FY2024 10\u2011K p.39]",
+          "passed": true,
+          "score": 1.0,
+          "score_detail": "gold=31510000000",
+          "routing": {
+            "used": [
+              "pdf"
+            ],
+            "required": [
+              "pdf"
+            ],
+            "ok": true,
+            "extra": []
+          },
+          "tools_used": [
+            "search_filings"
+          ],
+          "unsupported_numbers": [],
+          "latency_ms": 1730,
+          "cost_usd": 0.000986,
+          "usage": {
+            "prompt_tokens": 8163,
+            "completion_tokens": 234,
+            "cached_tokens": 2803
+          },
+          "llm_steps": 1,
+          "degraded": false,
+          "models": [
+            "gpt-oss-120b"
+          ]
+        },
+        {
+          "id": "h_012",
+          "tier": 3,
+          "evaluation": "llm_judge",
+          "question": "What Intelligent Cloud revenue did Microsoft report for fiscal year 2024 in its FY2024 10-K, and how does that compare with the figure used for FY2024 after the August 2024 segment change?",
+          "gold": "The FY2024 10-K reported Intelligent Cloud revenue of about $105.4 billion under the old segment definitions; after the restatement, FY2024 Intelligent Cloud revenue is about $87.5 billion (the database / FY2025 10-K basis), about $17.9 billion lower because some businesses moved to other segments.",
+          "answer": "Microsoft reported Intelligent\u202fCloud revenue of **$105.4\u202fbillion** for fiscal year\u202f2024 in its FY\u202f2024 Form\u202f10\u2011K. After the August\u202f2024 segment restatement, the FY\u202f2024 figure was **recast to $87.5\u202fbillion** in the FY\u202f2025 Form\u202f10\u2011K.\n\n- FY\u202f2024 10\u2011K \u201cSegment results of operations\u201d table shows Intelligent\u202fCloud revenue\u202f=\u202f$105,362\u202fmillion (\u2248\u202f$105.4\u202fbillion)\u3010MSFT FY2024 10\u2011K p.43\u3011.  \n- FY\u202f2025 10\u2011K \u201cSegment revenue\u201d table (which includes the restated prior\u2011period amounts) shows Intelligent\u202fCloud revenue for 2024\u202f=\u202f$87,464\u202fmillion (\u2248\u202f$87.5\u202fbillion)\u3010MSFT FY2025 10\u2011K p.79\u3011.  \n\n**Thus, the original FY\u202f2024 filing reported $105.4\u202fbillion, but the post\u2011August\u202f2024 restated figure is $87.5\u202fbillion.**  \n\nSources: [MSFT FY2024 10\u2011K p.43]; [MSFT FY2025 10\u2011K p.79]",
+          "passed": true,
+          "score": 1.0,
+          "score_detail": "The candidate correctly states both key figures: $105.4B ($105,362M) Intelligent Cloud revenue as reported in the FY2024 10-K under the old segment definitions, and $87.5B ($87,464M) as the restated FY2024 figure in the FY2025 10-K after the August 2024 segment change. This matches the reference exactly and directly answers both parts of the question. The only omitted element is the explicit ~$17.9B difference and the reason for it, but since both underlying numbers are provided, the comparison is fully conveyed; this is a minor omission of a derived detail rather than a missing key fact. | mi",
+          "routing": {
+            "used": [
+              "pdf"
+            ],
+            "required": [
+              "pdf",
+              "sql"
+            ],
+            "ok": false,
+            "extra": []
+          },
+          "tools_used": [
+            "search_filings"
+          ],
+          "unsupported_numbers": [],
+          "latency_ms": 4440,
+          "cost_usd": 0.001704,
+          "usage": {
+            "prompt_tokens": 17890,
+            "completion_tokens": 727,
+            "cached_tokens": 10487
+          },
+          "llm_steps": 2,
+          "degraded": false,
+          "models": [
+            "gpt-oss-120b"
+          ]
+        },
+        {
+          "id": "h_013",
+          "tier": 1,
+          "evaluation": "fuzzy_numeric",
+          "question": "What was Apple's current ratio in fiscal year 2025?",
+          "gold": "About 0.89 (current assets $148.0B / current liabilities $165.6B).",
+          "answer": "Apple's current ratio in fiscal year\u202f2025 was **0.9**.\n\n- Total current assets FY2025: $147.96\u202fbillion; total current liabilities FY2025: $165.63\u202fbillion (database)\u3010SQL: SELECT total_current_assets, total_current_liabilities FROM balance_sheets WHERE company_ticker='AAPL' AND fiscal_year=2025 AND period_type='FY';\u3011  \n- Current ratio = 147.96\u202fb\u202f/\u202f165.63\u202fb = **0.893** (rounded to one decimal)\u3010calc\u3011  \n\n**Sources:** [SQL: balance_sheets]",
+          "passed": true,
+          "score": 1.0,
+          "score_detail": "gold=0.89",
+          "routing": {
+            "used": [
+              "sql"
+            ],
+            "required": [
+              "sql"
+            ],
+            "ok": true,
+            "extra": []
+          },
+          "tools_used": [
+            "query_database",
+            "calculate"
+          ],
+          "unsupported_numbers": [],
+          "latency_ms": 2125,
+          "cost_usd": 0.000291,
+          "usage": {
+            "prompt_tokens": 7167,
+            "completion_tokens": 266,
+            "cached_tokens": 6989
+          },
+          "llm_steps": 2,
+          "degraded": false,
+          "models": [
+            "gpt-oss-120b"
+          ]
+        },
+        {
+          "id": "h_014",
+          "tier": 2,
+          "evaluation": "llm_judge",
+          "question": "What was Apple's Services gross margin percentage in fiscal year 2025, and how did it compare with Products?",
+          "gold": "Services gross margin was 75.4% in FY2025 (up from 73.9% in FY2024), versus 36.8% for Products.",
+          "answer": "Apple\u2019s Services gross margin was **75.4\u202f%** in fiscal year\u202f2025, versus a **36.8\u202f%** gross margin for Products, meaning Services earned roughly double the margin of Products.  \n\n- Services gross margin percentage FY2025:\u202f75.4\u202f%\u3010AAPL FY2025 10\u2011K p.25\u3011  \n- Products gross margin percentage FY2025:\u202f36.8\u202f%\u3010AAPL FY2025 10\u2011K p.25\u3011  \n- Difference (Services\u202f\u2013\u202fProducts):\u202f**38.6\u202fpercentage points**\u3010calculate: margin_diff\u3011  \n\nSources: [AAPL FY2025 10\u2011K p.25] (gross margin table).",
+          "passed": true,
+          "score": 1.0,
+          "score_detail": "The candidate correctly states Services gross margin of 75.4% and Products gross margin of 36.8% for FY2025, matching the reference exactly, and correctly characterizes the comparison (Services roughly double Products, 38.6 pp gap). The reference's parenthetical FY2024 figure (73.9%) is supplementary context not asked for by the question, so its omission does not detract from a fully correct answer.",
+          "routing": {
+            "used": [
+              "pdf"
+            ],
+            "required": [
+              "pdf"
+            ],
+            "ok": true,
+            "extra": []
+          },
+          "tools_used": [
+            "search_filings",
+            "calculate"
+          ],
+          "unsupported_numbers": [],
+          "latency_ms": 3307,
+          "cost_usd": 0.001519,
+          "usage": {
+            "prompt_tokens": 21570,
+            "completion_tokens": 521,
+            "cached_tokens": 15030
+          },
+          "llm_steps": 2,
+          "degraded": false,
+          "models": [
+            "gpt-oss-120b"
+          ]
+        },
+        {
+          "id": "h_015",
+          "tier": 2,
+          "evaluation": "exact_match_entity",
+          "question": "Which company grew net income the fastest between its two most recent fiscal years, and by how much?",
+          "gold": "Alphabet, with net income up about 32.0% (from $100.1B to $132.2B). Apple grew about 19.5% and Microsoft about 15.5%.",
+          "answer": "Alphabet had the fastest net\u2011income growth between its two most recent fiscal years, increasing by **32.0\u202f%** from FY2024 to FY2025.\n\n- FY2024 net income: $100.1\u202fb (Alphabet) \u2192 FY2025 net income: $132.2\u202fb (Alphabet) \u2192 growth\u202f=\u202f32.0\u202f%\u3010SQL: income_statements\u3011  \n- Apple net\u2011income growth FY2024\u2011FY2025: 19.5\u202f%\u3010SQL: income_statements\u3011  \n- Microsoft net\u2011income growth FY2024\u2011FY2025: 15.5\u202f%\u3010SQL: income_statements\u3011\n\n**Sources:** [SQL: income_statements]",
+          "passed": true,
+          "score": 1.0,
+          "score_detail": "entity Alphabet vs Alphabet (ok); number ok",
+          "routing": {
+            "used": [
+              "sql"
+            ],
+            "required": [
+              "sql"
+            ],
+            "ok": true,
+            "extra": []
+          },
+          "tools_used": [
+            "query_database",
+            "calculate"
+          ],
+          "unsupported_numbers": [],
+          "latency_ms": 2550,
+          "cost_usd": 0.000699,
+          "usage": {
+            "prompt_tokens": 7513,
+            "completion_tokens": 364,
+            "cached_tokens": 4788
+          },
+          "llm_steps": 2,
+          "degraded": false,
+          "models": [
+            "gpt-oss-120b"
+          ]
+        }
+      ]
+    },
+    {
+      "run": 3,
+      "summary": {
+        "n": 15,
+        "accuracy": 1.0,
+        "mean_score": 1.0,
+        "by": {
+          "tier": {
+            "1": "6/6",
+            "2": "7/7",
+            "3": "2/2"
+          },
+          "evaluation": {
+            "exact_match_entity": "3/3",
+            "fuzzy_numeric": "5/5",
+            "llm_judge": "5/5",
+            "refusal": "2/2"
+          }
+        },
+        "routing_accuracy": 0.857,
+        "answers_with_unsupported_numbers": 0,
+        "errors": 0,
+        "judge_errors_excluded": 0,
+        "latency_p50_s": 2.2,
+        "latency_p95_s": 5.7,
+        "mean_cost_usd": 0.00072,
+        "total_cost_usd": 0.0108,
+        "judge_cost_usd": 0,
+        "mean_prompt_tokens": 9236,
+        "mean_cached_tokens": 6498,
+        "mean_completion_tokens": 356,
+        "mean_tool_calls": 1.7
+      },
+      "rows": [
+        {
+          "id": "h_001",
+          "tier": 1,
+          "evaluation": "fuzzy_numeric",
+          "question": "What was Microsoft's net income in fiscal year 2024?",
+          "gold": "$88.1 billion",
+          "answer": "Microsoft's net income in fiscal year\u202f2024 was $88.1\u202fbillion.\n\n- FY2024 net income from the income statement table: $88,136,000,000 \u2192 $88.1\u202fbillion\u3010SQL: SELECT fiscal_year, net_income FROM income_statements WHERE company_ticker='MSFT' AND period_type='FY' ORDER BY fiscal_year;\u3011.",
+          "passed": true,
+          "score": 1.0,
+          "score_detail": "gold=88136000000",
+          "routing": {
+            "used": [
+              "sql"
+            ],
+            "required": [
+              "sql"
+            ],
+            "ok": true,
+            "extra": []
+          },
+          "tools_used": [
+            "query_database"
+          ],
+          "unsupported_numbers": [],
+          "latency_ms": 1091,
+          "cost_usd": 0.000488,
+          "usage": {
+            "prompt_tokens": 4707,
+            "completion_tokens": 155,
+            "cached_tokens": 2305
+          },
+          "llm_steps": 1,
+          "degraded": false,
+          "models": [
+            "gpt-oss-120b"
+          ]
+        },
+        {
+          "id": "h_002",
+          "tier": 1,
+          "evaluation": "fuzzy_numeric",
+          "question": "What were Alphabet's diluted earnings per share in fiscal year 2025?",
+          "gold": "$10.81",
+          "answer": "Alphabet's diluted earnings per share in fiscal year\u202f2025 was **$10.8 per share**.\n\n- FY2025 diluted EPS from the income statement:\u202f10.81\u202fdiluted\u202fEPS\u3010SQL: SELECT fiscal_year, eps_diluted FROM income_statements WHERE company_ticker='GOOGL' AND period_type='FY' ORDER BY fiscal_year;\u3011  \n\n**Sources:** [SQL: income_statements]",
+          "passed": true,
+          "score": 1.0,
+          "score_detail": "gold=10.81",
+          "routing": {
+            "used": [
+              "sql"
+            ],
+            "required": [
+              "sql"
+            ],
+            "ok": true,
+            "extra": []
+          },
+          "tools_used": [
+            "query_database"
+          ],
+          "unsupported_numbers": [],
+          "latency_ms": 1185,
+          "cost_usd": 0.000191,
+          "usage": {
+            "prompt_tokens": 4715,
+            "completion_tokens": 174,
+            "cached_tokens": 4599
+          },
+          "llm_steps": 1,
+          "degraded": false,
+          "models": [
+            "gpt-oss-120b"
+          ]
+        },
+        {
+          "id": "h_003",
+          "tier": 2,
+          "evaluation": "fuzzy_numeric",
+          "question": "What was Google's gross margin percentage in its most recent fiscal year?",
+          "gold": "About 59.7% (revenue $402.8B minus cost of revenues $162.5B = gross profit $240.3B). Gross profit is not stored for Alphabet and must be computed.",
+          "answer": "Alphabet\u2019s gross margin in fiscal year\u202f2025 was **59.7\u202f%**.\n\n- FY2025 revenue: $402.8\u202fbillion; cost of revenue: $162.5\u202fbillion (database)\u3010SQL\u3011  \n- Gross profit = $402.8\u202fb\u202f\u2013\u202f$162.5\u202fb = $240.3\u202fb; gross margin\u202f=\u202f$240.3\u202fb\u202f/\u202f$402.8\u202fb\u202f\u00d7\u202f100\u202f=\u202f59.7\u202f%\u3010CALC\u3011\n\n**Sources:** [SQL: income_statements for GOOGL FY2025]",
+          "passed": true,
+          "score": 1.0,
+          "score_detail": "gold=59.7",
+          "routing": {
+            "used": [
+              "sql"
+            ],
+            "required": [
+              "sql"
+            ],
+            "ok": true,
+            "extra": []
+          },
+          "tools_used": [
+            "query_database",
+            "calculate"
+          ],
+          "unsupported_numbers": [],
+          "latency_ms": 2236,
+          "cost_usd": 0.000655,
+          "usage": {
+            "prompt_tokens": 7250,
+            "completion_tokens": 335,
+            "cached_tokens": 4696
+          },
+          "llm_steps": 2,
+          "degraded": false,
+          "models": [
+            "gpt-oss-120b"
+          ]
+        },
+        {
+          "id": "h_004",
+          "tier": 2,
+          "evaluation": "exact_match_entity",
+          "question": "Which company spent the largest share of its revenue on research and development in fiscal year 2025, and what was that share?",
+          "gold": "Alphabet, about 15.2% of revenue.",
+          "answer": "Alphabet had the highest share of revenue spent on research and development in fiscal year\u202f2025, at **15.2\u202f%** of its revenue.\n\n- Apple R&D spend was $34.55\u202fbillion on $416.2\u202fbillion revenue \u2192 **8.3\u202f%** of revenue\u3010SQL: income_statements\u3011.  \n- Microsoft R&D spend was $32.49\u202fbillion on $281.7\u202fbillion revenue \u2192 **11.5\u202f%** of revenue\u3010SQL: income_statements\u3011.  \n- Alphabet R&D spend was $61.09\u202fbillion on $402.8\u202fbillion revenue \u2192 **15.2\u202f%** of revenue\u3010SQL: income_statements\u3011.  \n\n**Sources:** [SQL: income_statements]",
+          "passed": true,
+          "score": 1.0,
+          "score_detail": "entity Alphabet vs Alphabet (ok); number ok",
+          "routing": {
+            "used": [
+              "sql"
+            ],
+            "required": [
+              "sql"
+            ],
+            "ok": true,
+            "extra": []
+          },
+          "tools_used": [
+            "query_database",
+            "calculate"
+          ],
+          "unsupported_numbers": [],
+          "latency_ms": 2206,
+          "cost_usd": 0.000366,
+          "usage": {
+            "prompt_tokens": 7420,
+            "completion_tokens": 341,
+            "cached_tokens": 7046
+          },
+          "llm_steps": 2,
+          "degraded": false,
+          "models": [
+            "gpt-oss-120b"
+          ]
+        },
+        {
+          "id": "h_005",
+          "tier": 2,
+          "evaluation": "exact_match_entity",
+          "question": "Excluding cost of revenue, which company had the highest operating expenses in FY2025, and how much were they?",
+          "gold": "Alphabet, about $111.3 billion (its reported total costs and expenses of $273.8B include $162.5B cost of revenues). Microsoft $65.4B, Apple $62.2B.",
+          "answer": "Alphabet had the highest operating expenses excluding cost of revenue in fiscal year\u202f2025, amounting to **$111.3\u202fbillion**.\n\n- Apple\u2019s total operating expenses already exclude cost of revenue, so FY2025 OPEX = $62.2\u202fbillion\u3010SQL: income_statements\u3011.  \n- Microsoft\u2019s total operating expenses also exclude cost of revenue, so FY2025 OPEX = $65.4\u202fbillion\u3010SQL: income_statements\u3011.  \n- Alphabet\u2019s total operating expenses include cost of revenue; subtracting cost of revenue ($162.5\u202fbillion) gives OPEX excluding cost of revenue = $273.8\u202fbillion\u202f\u2212\u202f$162.5\u202fbillion = **$111.3\u202fbillion**\u3010SQL: income_statements\u3011\u3010calculate\u3011.  \n\n**Sources:**  \n- [SQL: income_statements] (Apple, Microsoft, Alphabet FY2025 total_operating_expenses and cost_of_revenue)  \n- [calculate] (derived OPEX values)",
+          "passed": true,
+          "score": 1.0,
+          "score_detail": "entity Alphabet vs Alphabet (ok); number ok",
+          "routing": {
+            "used": [
+              "sql"
+            ],
+            "required": [
+              "sql"
+            ],
+            "ok": true,
+            "extra": []
+          },
+          "tools_used": [
+            "query_database",
+            "calculate"
+          ],
+          "unsupported_numbers": [],
+          "latency_ms": 3058,
+          "cost_usd": 0.00051,
+          "usage": {
+            "prompt_tokens": 7436,
+            "completion_tokens": 577,
+            "cached_tokens": 7050
+          },
+          "llm_steps": 2,
+          "degraded": false,
+          "models": [
+            "gpt-oss-120b"
+          ]
+        },
+        {
+          "id": "h_006",
+          "tier": 1,
+          "evaluation": "llm_judge",
+          "question": "How much revenue did Apple generate in the United States in fiscal year 2025?",
+          "gold": "Apple does not report United States revenue separately in the provided data; its Americas segment (North and South America) had net sales of about $178.4 billion in FY2025.",
+          "answer": "Apple\u2019s United\u202fStates net revenue for fiscal year\u202f2025 is not disclosed separately; the company reports net sales by geographic segment, with the \u201cAmericas\u201d segment (which includes the United\u202fStates and other countries in the region) amounting to **$178.4\u202fbillion**\u3010AAPL FY2025 10\u2011K p.24\u3011.  \n\n- The 10\u2011K\u2019s MD&A provides a table of net sales by reportable geographic segment for FY\u202f2025; the Americas segment is $178,353\u202fmillion (\u2248\u202f$178.4\u202fbillion)\u3010AAPL FY2025 10\u2011K p.24\u3011.  \n- Apple does not break out United\u202fStates revenue as a distinct line item in its filings; the only available regional figure that contains U.S. sales is the Americas segment, which also includes Canada, Latin America and the Caribbean.  \n\n**Sources:**  \n- [AAPL FY2025 10\u2011K p.24] (Item\u202f7 MD&A, net sales by geographic segment)",
+          "passed": true,
+          "score": 1.0,
+          "score_detail": "The candidate correctly states that Apple does not disclose U.S. revenue separately and reports the Americas segment net sales of $178.4 billion ($178,353 million) for FY2025, matching the reference answer exactly. Extra detail about the segment's composition is consistent and correct.",
+          "routing": {
+            "used": [
+              "pdf"
+            ],
+            "required": [
+              "sql"
+            ],
+            "ok": false,
+            "extra": [
+              "pdf"
+            ]
+          },
+          "tools_used": [
+            "search_filings"
+          ],
+          "unsupported_numbers": [],
+          "latency_ms": 2131,
+          "cost_usd": 0.001137,
+          "usage": {
+            "prompt_tokens": 8367,
+            "completion_tokens": 323,
+            "cached_tokens": 2310
+          },
+          "llm_steps": 1,
+          "degraded": false,
+          "models": [
+            "gpt-oss-120b"
+          ]
+        },
+        {
+          "id": "h_007",
+          "tier": 1,
+          "evaluation": "refusal",
+          "question": "What was Amazon's total revenue in 2025?",
+          "gold": "Not in the provided data (only Apple, Microsoft and Alphabet are covered).",
+          "answer": "Amazon is not one of the companies covered by the allowed data sources (Apple, Microsoft, or Alphabet/Google). Therefore, its 2025 total revenue is **not in the provided data**.",
+          "passed": true,
+          "score": 1.0,
+          "score_detail": "declined correctly",
+          "routing": {
+            "used": [],
+            "required": [],
+            "ok": true,
+            "extra": []
+          },
+          "tools_used": [],
+          "unsupported_numbers": [],
+          "latency_ms": 602,
+          "cost_usd": 7.5e-05,
+          "usage": {
+            "prompt_tokens": 2305,
+            "completion_tokens": 64,
+            "cached_tokens": 2291
+          },
+          "llm_steps": 0,
+          "degraded": false,
+          "models": [
+            "gpt-oss-120b"
+          ]
+        },
+        {
+          "id": "h_008",
+          "tier": 1,
+          "evaluation": "refusal",
+          "question": "What was Apple's total revenue in fiscal year 2021?",
+          "gold": "Not in the provided data (financials cover FY2023-FY2025).",
+          "answer": "Apple\u2019s total revenue for fiscal year\u202f2021 is not in the provided data. The database contains annual figures only for FY\u202f2023\u2011FY\u202f2025, and the FY\u202f2024 and FY\u202f2025 10\u2011K filings include prior\u2011year numbers only back to FY\u202f2023. No source contains the FY\u202f2021 revenue figure.  \n\n**Sources:** Not in the provided data.",
+          "passed": true,
+          "score": 1.0,
+          "score_detail": "declined correctly",
+          "routing": {
+            "used": [],
+            "required": [
+              "sql"
+            ],
+            "ok": false,
+            "extra": []
+          },
+          "tools_used": [],
+          "unsupported_numbers": [],
+          "latency_ms": 771,
+          "cost_usd": 0.000122,
+          "usage": {
+            "prompt_tokens": 2306,
+            "completion_tokens": 142,
+            "cached_tokens": 2291
+          },
+          "llm_steps": 0,
+          "degraded": false,
+          "models": [
+            "gpt-oss-120b"
+          ]
+        },
+        {
+          "id": "h_009",
+          "tier": 2,
+          "evaluation": "llm_judge",
+          "question": "How fast did Microsoft's Intelligent Cloud segment revenue grow in fiscal year 2025, and what does the 10-K say drove it?",
+          "gold": "Intelligent Cloud revenue grew about 21.5% from $87.5B to $106.3B (restated basis). The FY2025 10-K attributes it to Azure and other cloud services, which grew 34%, driven by demand for its portfolio of services.",
+          "answer": "Microsoft\u2019s Intelligent\u202fCloud segment revenue grew **21.5% in fiscal\u202f2025** (from $87.5\u202fbillion in FY\u202f2024 to $106.3\u202fbillion in FY\u202f2025)\u202f\u3010{\"growth_pct\":21.495701}\u3011.  \n\n- The FY\u202f2025 10\u2011K MD&A states the increase was \u201cdriven by Azure and other cloud services\u201d \u2013 server products and cloud services revenue rose $18.6\u202fbillion, a 23% jump, with Azure and other cloud services revenue growing 34% on strong demand for its portfolio of services\u3010MSFT FY2025 10\u2011K p.38\u3011.  \n\n**Sources**  \n- [SQL: segment_revenue for MSFT Intelligent Cloud FY2023\u2011FY2025]  \n- [MSFT FY2025 10\u2011K p.38]",
+          "passed": true,
+          "score": 1.0,
+          "score_detail": "The candidate matches all key facts: 21.5% growth, from $87.5B to $106.3B, driven by Azure and other cloud services which grew 34% on demand for its portfolio of services. The additional detail (server products and cloud services up $18.6B, 23%) is consistent extra context and does not contradict the reference.",
+          "routing": {
+            "used": [
+              "pdf",
+              "sql"
+            ],
+            "required": [
+              "pdf",
+              "sql"
+            ],
+            "ok": true,
+            "extra": []
+          },
+          "tools_used": [
+            "query_database",
+            "calculate",
+            "search_filings"
+          ],
+          "unsupported_numbers": [],
+          "latency_ms": 3698,
+          "cost_usd": 0.001261,
+          "usage": {
+            "prompt_tokens": 13350,
+            "completion_tokens": 459,
+            "cached_tokens": 7529
+          },
+          "llm_steps": 3,
+          "degraded": false,
+          "models": [
+            "gpt-oss-120b"
+          ]
+        },
+        {
+          "id": "h_010",
+          "tier": 3,
+          "evaluation": "llm_judge",
+          "question": "How did Google Cloud's share of Alphabet's total revenue change from fiscal year 2024 to fiscal year 2025?",
+          "gold": "Google Cloud rose from about 12.4% of revenue ($43.2B of $350.0B) in FY2024 to about 14.6% ($58.7B of $402.8B) in FY2025, an increase of about 2.2 percentage points.",
+          "answer": "Alphabet's Google Cloud revenue accounted for **12.4% of total revenue in FY2024** and **14.6% of total revenue in FY2025**, an increase of **2.2 percentage points**.\n\n- FY2024 total revenue: $350.0\u202fbillion; Google Cloud revenue: $43.2\u202fbillion \u2192 share\u202f=\u202f12.35%\u3010SQL: segment_revenue\u3011.  \n- FY2025 total revenue: $402.8\u202fbillion; Google Cloud revenue: $58.7\u202fbillion \u2192 share\u202f=\u202f14.57%\u3010SQL: segment_revenue\u3011.  \n- Change in share: 14.57%\u202f\u2212\u202f12.35%\u202f=\u202f2.22\u202fpercentage points\u3010calculate: change_pct\u3011.\n\nSources: [SQL: income_statements], [SQL: segment_revenue], [calculate: change_pct]",
+          "passed": true,
+          "score": 1.0,
+          "score_detail": "The candidate matches the reference on all key facts: Google Cloud was 12.4% of revenue in FY2024 ($43.2B of $350.0B) and 14.6% in FY2025 ($58.7B of $402.8B), an increase of about 2.2 percentage points. The more precise figures (12.35%, 14.57%, 2.22 pp) are consistent with the reference's rounded values, and nothing contradicts the reference.",
+          "routing": {
+            "used": [
+              "sql"
+            ],
+            "required": [
+              "sql"
+            ],
+            "ok": true,
+            "extra": []
+          },
+          "tools_used": [
+            "query_database",
+            "calculate"
+          ],
+          "unsupported_numbers": [],
+          "latency_ms": 9471,
+          "cost_usd": 0.00109,
+          "usage": {
+            "prompt_tokens": 15823,
+            "completion_tokens": 661,
+            "cached_tokens": 12446
+          },
+          "llm_steps": 4,
+          "degraded": false,
+          "models": [
+            "gpt-oss-120b"
+          ]
+        },
+        {
+          "id": "h_011",
+          "tier": 2,
+          "evaluation": "fuzzy_numeric",
+          "question": "What was YouTube ads revenue in fiscal year 2023?",
+          "gold": "$31.5 billion",
+          "answer": "Alphabet\u2019s YouTube ads revenue in fiscal year\u202f2023 was **$31.5\u202fbillion**.\n\n- FY2023 YouTube ads revenue =\u202f31,510\u202fmillion dollars (as shown in the \u201cRevenues by type\u201d table of the FY2024 Form\u202f10\u2011K)\u3010GOOGL FY2024 10\u2011K p.39\u3011.  \n\n**Sources:** [GOOGL FY2024 10\u2011K p.39]",
+          "passed": true,
+          "score": 1.0,
+          "score_detail": "gold=31510000000",
+          "routing": {
+            "used": [
+              "pdf"
+            ],
+            "required": [
+              "pdf"
+            ],
+            "ok": true,
+            "extra": []
+          },
+          "tools_used": [
+            "search_filings"
+          ],
+          "unsupported_numbers": [],
+          "latency_ms": 1922,
+          "cost_usd": 0.001055,
+          "usage": {
+            "prompt_tokens": 8163,
+            "completion_tokens": 237,
+            "cached_tokens": 2306
+          },
+          "llm_steps": 1,
+          "degraded": false,
+          "models": [
+            "gpt-oss-120b"
+          ]
+        },
+        {
+          "id": "h_012",
+          "tier": 3,
+          "evaluation": "llm_judge",
+          "question": "What Intelligent Cloud revenue did Microsoft report for fiscal year 2024 in its FY2024 10-K, and how does that compare with the figure used for FY2024 after the August 2024 segment change?",
+          "gold": "The FY2024 10-K reported Intelligent Cloud revenue of about $105.4 billion under the old segment definitions; after the restatement, FY2024 Intelligent Cloud revenue is about $87.5 billion (the database / FY2025 10-K basis), about $17.9 billion lower because some businesses moved to other segments.",
+          "answer": "Microsoft reported Intelligent\u202fCloud revenue of **$105.4\u202fbillion** for fiscal year\u202f2024 in its FY\u202f2024 Form\u202f10\u2011K. After the August\u202f2024 segment restatement, the FY\u202f2024 figure used in the FY\u202f2025 filing is **$87.5\u202fbillion**.\n\n- FY\u202f2024 10\u2011K (Item\u202f7, segment results) lists Intelligent\u202fCloud revenue\u202f=\u202f$105,362\u202fmillion\u3010MSFT FY2024 10\u2011K p.43\u3011.  \n- FY\u202f2025 10\u2011K (Item\u202f8, segment tables) shows the recast FY\u202f2024 Intelligent\u202fCloud revenue\u202f=\u202f$87,464\u202fmillion\u3010MSFT FY2025 10\u2011K p.79\u3011.  \n\n**Comparison:** The restated FY\u202f2024 Intelligent\u202fCloud revenue is **$17.9\u202fbillion lower** than the original FY\u202f2024 filing (\u2248\u202f\u221216.9%).  \n\nSources: [MSFT FY2024 10\u2011K p.43], [MSFT FY2025 10\u2011K p.79]",
+          "passed": true,
+          "score": 1.0,
+          "score_detail": "The candidate correctly states the FY2024 10-K Intelligent Cloud revenue of $105.4 billion ($105,362M), the restated FY2024 figure of $87.5 billion ($87,464M) after the August 2024 segment change, and the ~$17.9 billion decrease, matching all key facts in the reference. The added detail (exact figures, percentage decline, citations) is consistent and correct.",
+          "routing": {
+            "used": [
+              "pdf",
+              "sql"
+            ],
+            "required": [
+              "pdf",
+              "sql"
+            ],
+            "ok": true,
+            "extra": []
+          },
+          "tools_used": [
+            "query_database",
+            "search_filings"
+          ],
+          "unsupported_numbers": [],
+          "latency_ms": 5672,
+          "cost_usd": 0.002268,
+          "usage": {
+            "prompt_tokens": 20451,
+            "completion_tokens": 766,
+            "cached_tokens": 9331
+          },
+          "llm_steps": 3,
+          "degraded": false,
+          "models": [
+            "gpt-oss-120b"
+          ]
+        },
+        {
+          "id": "h_013",
+          "tier": 1,
+          "evaluation": "fuzzy_numeric",
+          "question": "What was Apple's current ratio in fiscal year 2025?",
+          "gold": "About 0.89 (current assets $148.0B / current liabilities $165.6B).",
+          "answer": "Apple's current ratio in fiscal year\u202f2025 was **0.9** (current assets $147.96\u202fbillion \u00f7 current liabilities $165.63\u202fbillion).\n\n- Total current assets FY2025: $147.96\u202fbillion; total current liabilities FY2025: $165.63\u202fbillion\u3010SQL: balance_sheets\u3011  \n- Current ratio = 147.957\u202fb\u202f/\u202f165.631\u202fb = **0.893** (rounded to one decimal)\u3010calculate\u3011\n\n**Sources:** [SQL: balance_sheets]",
+          "passed": true,
+          "score": 1.0,
+          "score_detail": "gold=0.89",
+          "routing": {
+            "used": [
+              "sql"
+            ],
+            "required": [
+              "sql"
+            ],
+            "ok": true,
+            "extra": []
+          },
+          "tools_used": [
+            "query_database",
+            "calculate"
+          ],
+          "unsupported_numbers": [],
+          "latency_ms": 2229,
+          "cost_usd": 0.000283,
+          "usage": {
+            "prompt_tokens": 7167,
+            "completion_tokens": 253,
+            "cached_tokens": 6989
+          },
+          "llm_steps": 2,
+          "degraded": false,
+          "models": [
+            "gpt-oss-120b"
+          ]
+        },
+        {
+          "id": "h_014",
+          "tier": 2,
+          "evaluation": "llm_judge",
+          "question": "What was Apple's Services gross margin percentage in fiscal year 2025, and how did it compare with Products?",
+          "gold": "Services gross margin was 75.4% in FY2025 (up from 73.9% in FY2024), versus 36.8% for Products.",
+          "answer": "Apple's Services gross margin was **75.4%** in fiscal year\u202f2025, while its Products gross margin was **36.8%** for the same year.\n\n- Services gross margin percentage FY2025:\u202f75.4% (Table \u201cGross Margin percentage\u201d in Item\u202f7 MD&A)\u3010AAPL FY2025 10\u2011K p.25\u3011  \n- Products gross margin percentage FY2025:\u202f36.8% (same table)\u3010AAPL FY2025 10\u2011K p.25\u3011  \n- Difference (Services\u202f\u2013\u202fProducts):\u202f**38.6 percentage points**\u3010calculation\u3011.\n\nSources: [AAPL FY2025 10\u2011K p.25]",
+          "passed": true,
+          "score": 1.0,
+          "score_detail": "The candidate correctly states Services gross margin of 75.4% and Products gross margin of 36.8% for FY2025, and explicitly compares them (38.6 percentage point difference), which is what the question asked. The reference's parenthetical FY2024 figure (73.9%) is extra context not required by the question, and its omission does not contradict the reference.",
+          "routing": {
+            "used": [
+              "pdf"
+            ],
+            "required": [
+              "pdf"
+            ],
+            "ok": true,
+            "extra": []
+          },
+          "tools_used": [
+            "search_filings",
+            "calculate"
+          ],
+          "unsupported_numbers": [],
+          "latency_ms": 3067,
+          "cost_usd": 0.000631,
+          "usage": {
+            "prompt_tokens": 21574,
+            "completion_tokens": 495,
+            "cached_tokens": 21498
+          },
+          "llm_steps": 2,
+          "degraded": false,
+          "models": [
+            "gpt-oss-120b"
+          ]
+        },
+        {
+          "id": "h_015",
+          "tier": 2,
+          "evaluation": "exact_match_entity",
+          "question": "Which company grew net income the fastest between its two most recent fiscal years, and by how much?",
+          "gold": "Alphabet, with net income up about 32.0% (from $100.1B to $132.2B). Apple grew about 19.5% and Microsoft about 15.5%.",
+          "answer": "Alphabet had the fastest net\u2011income growth between its two most recent fiscal years, increasing by **32.0\u202f%** from FY2024 to FY2025.\n\n- FY2024 net income: $100.1\u202fb (Alphabet) \u2192 FY2025 net income: $132.2\u202fb (Alphabet) \u2192 growth\u202f=\u202f32.0\u202f%\u3010SQL: income_statements\u3011  \n- Apple net\u2011income growth FY2024\u2011FY2025: 19.5\u202f%\u3010SQL: income_statements\u3011  \n- Microsoft net\u2011income growth FY2024\u2011FY2025: 15.5\u202f%\u3010SQL: income_statements\u3011\n\n**Sources:** [SQL: income_statements]",
+          "passed": true,
+          "score": 1.0,
+          "score_detail": "entity Alphabet vs Alphabet (ok); number ok",
+          "routing": {
+            "used": [
+              "sql"
+            ],
+            "required": [
+              "sql"
+            ],
+            "ok": true,
+            "extra": []
+          },
+          "tools_used": [
+            "query_database",
+            "calculate"
+          ],
+          "unsupported_numbers": [],
+          "latency_ms": 3398,
+          "cost_usd": 0.000699,
+          "usage": {
+            "prompt_tokens": 7513,
+            "completion_tokens": 364,
+            "cached_tokens": 4788
+          },
+          "llm_steps": 2,
+          "degraded": false,
+          "models": [
+            "gpt-oss-120b"
+          ]
+        }
+      ]
+    }
+  ]
+}

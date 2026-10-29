@@ -1,0 +1,44 @@
+{
+  "args": {
+    "url": "http://127.0.0.1:8020",
+    "levels": "10,25,50",
+    "per_client": 2
+  },
+  "rows": [
+    {
+      "concurrency": 10,
+      "requests": 20,
+      "ok": 20,
+      "errors": {},
+      "throughput_per_min": 101.2,
+      "p50_s": 2.9,
+      "p95_s": 5.4,
+      "mean_cost_usd": 0.00089,
+      "answers_with_unsupported_numbers": 0
+    },
+    {
+      "concurrency": 25,
+      "requests": 50,
+      "ok": 50,
+      "errors": {},
+      "throughput_per_min": 249.7,
+      "p50_s": 2.8,
+      "p95_s": 5.8,
+      "mean_cost_usd": 0.00087,
+      "answers_with_unsupported_numbers": 0
+    },
+    {
+      "concurrency": 50,
+      "requests": 100,
+      "ok": 46,
+      "errors": {
+        "503": 54
+      },
+      "throughput_per_min": 69.3,
+      "p50_s": 3.6,
+      "p95_s": 19.3,
+      "mean_cost_usd": 0.0007,
+      "answers_with_unsupported_numbers": 0
+    }
+  ]
+}
